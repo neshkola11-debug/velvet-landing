@@ -1,0 +1,69 @@
+{
+  "_как_править": "Меняйте только значения справа от двоеточия, кавычки и запятые не трогайте. После сохранения сайт пересоберётся сам за 1–2 минуты.",
+
+  "_base_path_пояснение": "Пока у сайта нет своего домена, он открывается по адресу neshkola11-debug.github.io/velvet-landing — тогда здесь должно стоять /velvet-landing. Когда подключим домен, поставьте пустые кавычки.",
+  "base_path": "/velvet-landing",
+
+  "studio": {
+    "name": "Velvet Laser",
+    "city": "Сыктывкар",
+    "address": "ул. Клары Цеткин, 50",
+    "address_note": "центр города",
+    "hours": "ежедневно с 09:00 до 21:00",
+    "phone": "+7 993 385-64-96",
+    "phone_link": "+79933856496",
+    "vk": "https://vk.com/velvetlaser11",
+    "vk_write": "https://vk.com/im?sel=-220881221",
+    "map_widget": "https://yandex.ru/map-widget/v1/?text=%D0%A1%D1%8B%D0%BA%D1%82%D1%8B%D0%B2%D0%BA%D0%B0%D1%80%2C%20%D1%83%D0%BB%D0%B8%D1%86%D0%B0%20%D0%9A%D0%BB%D0%B0%D1%80%D1%8B%20%D0%A6%D0%B5%D1%82%D0%BA%D0%B8%D0%BD%2C%2050&z=16",
+    "yandex_maps_url": "",
+    "callback_minutes": 15
+  },
+
+  "legal": {
+    "operator": "Индивидуальный предприниматель Соколов Дмитрий Сергеевич",
+    "operator_short": "ИП Соколов Д. С.",
+    "inn": "110504280155",
+    "ogrnip": "323112100013474",
+    "mail_address": "167031, Республика Коми, г. Сыктывкар, ул. Карла Маркса, д. 119, кв. 206",
+    "email": "sokol-96ya@yandex.ru",
+    "services_kind": "бытовые косметико-эстетические услуги",
+    "warning": "Имеются противопоказания. Необходима консультация специалиста."
+  },
+
+  "promo": {
+    "until": "30 ноября 2026",
+    "until_iso": "2026-11-30",
+    "for_whom": "для первого посещения студии",
+    "trial_free_days": 7
+  },
+
+  "integrations": {
+    "_про_заявки": "Адрес, куда форма отправляет заявку (вебхук amoCRM или другой обработчик). Пока пусто — форма предлагает позвонить или написать в ВК.",
+    "form_endpoint": "",
+    "yandex_metrika_id": "",
+    "vk_pixel_id": ""
+  },
+
+  "offers": {
+    "face": {
+      "slug": "massazh-lica",
+      "title": "Массаж лица за 1 290 ₽",
+      "price": 1290,
+      "price_regular": "от 2 190 до 2 690 ₽",
+      "duration": "",
+      "kinds": ["классический", "скульптурный", "буккальный"],
+      "pair_price": 2290
+    },
+    "lpg": {
+      "slug": "lpg",
+      "title": "LPG-массаж за 890 ₽",
+      "price": 890,
+      "price_regular": "1 800 ₽",
+      "duration": "40 минут",
+      "suit_price": 300,
+      "vacuum_price": 890,
+      "vacuum_regular": "1 690 ₽",
+      "vacuum_duration": ""
+    }
+  }
+}
