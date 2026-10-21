@@ -219,7 +219,7 @@ def page_face():
 <main>
 <section class="hero"><div class="wrap">
   <div class="hero-media">
-    <div class="arch">{img('f-hero', 'Мастер делает массаж лица гостье студии', big=True, eager=True)}</div>
+    <div class="arch pos-low">{img('f-hero', 'Гостья отдыхает с закрытыми глазами во время ухода за лицом', big=True, eager=True)}</div>
     {ticket('Приглашение на первый визит', 'Массаж лица на выбор', '1 290<small>₽</small>', f"обычно <s>{o['price_regular']}</s>", f"до {P['until']}", 'Вдвоём — 2 290 ₽')}
   </div>
   <div class="hero-copy">
@@ -262,7 +262,7 @@ def page_face():
   <p class="kinds-note">Не знаете, что выбрать? Мастер подскажет — цена от этого не изменится.</p>
 </div></section>
 
-{visit_block('room', 'Кабинет студии, где проходит массаж', [
+{visit_block('f-care', 'Мастер наносит средство кистью, гостья отдыхает с закрытыми глазами', [
     ('Звонок', f"Администратор перезванивает в течение {S['callback_minutes']} минут и подбирает удобное время."),
     ('Знакомство', 'Мастер спрашивает о самочувствии и о том, чего вам хочется от процедуры.'),
     ('Массаж', 'Вы лежите с закрытыми глазами. Интенсивность подбираем под вас и спрашиваем, комфортно ли.'),
@@ -308,7 +308,7 @@ def page_lpg():
 <main>
 <section class="hero"><div class="wrap">
   <div class="hero-media">
-    <div class="arch">{img('l-hero', 'Мастер проводит LPG-массаж', big=True, eager=True)}</div>
+    <div class="arch">{img('l-hero', 'Мастер проводит LPG-массаж ног в белом костюме', big=True, eager=True)}</div>
     {ticket('Приглашение на первый визит', f"LPG-массаж, {o['duration']}", '890<small>₽</small>', f"обычно <s>{o['price_regular']}</s> · костюм {rub(o['suit_price'])}", f"до {P['until']}", 'Вакуум — тоже 890 ₽')}
   </div>
   <div class="hero-copy">
@@ -341,7 +341,7 @@ def page_lpg():
   <div class="sec-head"><h2>Два варианта — одна цена</h2>
   <p>Оба для первого визита стоят {rub(o['price'])}. Выберите, что ближе, или спросите администратора.</p></div>
   <div class="kinds" style="grid-template-columns:repeat(auto-fit,minmax(260px,1fr))">
-    <div class="kind"><div class="arch">{img('l-arc', 'LPG-массаж: гостья в костюме на кушетке')}</div>
+    <div class="kind"><div class="arch">{img('l-lpg', 'Руки мастера проводят LPG-массаж')}</div>
       <h3>LPG-массаж, {o['duration']}</h3><p>Аппарат с роликами работает по телу через специальный костюм. Ощущения как от плотного массажа.</p><span class="tag">{rub(o['price'])} + личный костюм {rub(o['suit_price'])}, обычно {o['price_regular']}</span></div>
     <div class="kind"><div class="arch">{img('l-device', 'Аппарат для массажа тела в кабинете студии')}</div>
       <h3>Вакуумный массаж всего тела</h3><p>Аппаратный массаж без костюма. Подойдёт, если хотите попробовать, ничего не покупая заранее.</p><span class="tag">{rub(o['vacuum_price'])}, обычно {o['vacuum_regular']}</span></div>
@@ -378,7 +378,7 @@ def page_lpg():
 
 {contacts_block()}
 
-{cross_block(f"Для лица — массаж за {rub(O['face']['price'])}", f"Классический, скульптурный или буккальный — на выбор. Тоже для первого визита, до {P['until']}.", f"/{O['face']['slug']}/", 'f-calm', 'Массаж лица в студии')}
+{cross_block(f"Для лица — массаж за {rub(O['face']['price'])}", f"Классический, скульптурный или буккальный — на выбор. Тоже для первого визита, до {P['until']}.", f"/{O['face']['slug']}/", 'f-brush', 'Уход за лицом в студии')}
 </main>
 """
     return h + body + footer(f"Записаться за {rub(o['price'])}")

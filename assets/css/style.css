@@ -76,7 +76,8 @@ p{margin:0 0 1em}
 .hero-copy{grid-area:copy}.hero-media{grid-area:media}.hero-act{grid-area:act}
 .hero-copy .lead{margin:0}
 .hero h1{max-width:12em;font-size:clamp(34px,8.6vw,64px)}
-.hero-media{position:relative;padding-bottom:124px}
+.hero-media{position:relative;padding-bottom:150px}
+.arch.pos-low img{object-position:55% 78%}
 .hero-media .arch{aspect-ratio:5/4;width:100%}
 .hero-media .ticket-wrap{position:absolute;left:12px;right:12px;bottom:0}
 .hero-media .ticket{max-width:none}
@@ -221,10 +222,11 @@ footer .links{display:flex;flex-wrap:wrap;gap:8px 18px;margin:12px 0}
   .hero{padding:36px 0 84px}
   .hero .wrap{grid-template-columns:1.05fr .95fr;grid-template-areas:"copy media" "act media";align-items:end;column-gap:64px;row-gap:28px}
   .hero-act{align-self:start}
-  .hero-media{padding-bottom:0;padding-left:40px}
+  .hero-media{padding-bottom:0;padding-left:120px}
   .hero-media .arch{aspect-ratio:4/5}
-  .hero-media .ticket-wrap{left:0;right:auto;bottom:40px}
-  .hero-media .ticket{max-width:330px}
+  .hero-media .ticket-wrap{left:0;right:auto;bottom:36px}
+  .hero-media .ticket{max-width:320px;padding:20px 22px 18px}
+  .hero-media .t-kicker{font-size:16px}
   section{padding:104px 0}
   .feel{padding:96px 0}
   .feel .wrap{display:grid;grid-template-columns:.8fr 1.2fr;gap:56px;align-items:start}
