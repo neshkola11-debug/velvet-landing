@@ -4,9 +4,10 @@
  *
  * Свойства скрипта (Настройки проекта → Свойства скрипта):
  *   TG_TOKEN — токен бота от @BotFather
- *   TG_CHAT  — номер группы (отрицательное число, например -1001234567890)
+ *   TG_CHAT  — номер группы «Заявки Velvet»: -5376920455
  */
 
+var SHEET_ID = '1RsepwU00Z3D6Ww7scYP6Am7HZ4bqlAKo9PV8jEcuI70'; // таблица «Заявки Velvet — сайт»
 var SHEET_NAME = 'Заявки';
 var HEADERS = ['Дата и время', 'Имя', 'Телефон', 'Процедура', 'Когда удобно', 'Страница',
   'utm_source', 'utm_medium', 'utm_campaign', 'utm_content', 'utm_term', 'yclid', 'Telegram'];
@@ -59,7 +60,7 @@ function doGet() {
 
 function sendTelegram_(l) {
   var p = PropertiesService.getScriptProperties();
-  var token = p.getProperty('TG_TOKEN'), chat = p.getProperty('TG_CHAT');
+  var token = p.getProperty('TG_TOKEN'), chat = p.getProperty('TG_CHAT') || '-5376920455';
   if (!token || !chat) return false;
 
   var source = l.utm_source
@@ -90,7 +91,7 @@ function sendTelegram_(l) {
 }
 
 function appendRow_(l, tgStatus) {
-  var ss = SpreadsheetApp.getActiveSpreadsheet();
+  var ss = SpreadsheetApp.openById(SHEET_ID);
   var sh = ss.getSheetByName(SHEET_NAME) || ss.insertSheet(SHEET_NAME);
   if (sh.getLastRow() === 0) {
     sh.appendRow(HEADERS);
