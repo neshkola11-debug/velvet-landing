@@ -74,7 +74,8 @@
       }
       var payload = {
         name: data.get('name'), phone: '+' + digits, time: data.get('time') || '',
-        offer: data.get('offer') || '', page: location.pathname, sent_at: new Date().toISOString()
+        offer: data.get('offer') || '', page: location.pathname, sent_at: new Date().toISOString(),
+        website: data.get('website') || ''
       };
       utmKeys.forEach(function (k) { payload[k] = utm[k]; });
       var btn = f.querySelector('button[type=submit]');
@@ -84,7 +85,8 @@
         return;
       }
       btn.disabled = true; btn.textContent = 'Отправляем…';
-      fetch(C.endpoint, { method: 'POST', headers: { 'Content-Type': 'application/json' }, body: JSON.stringify(payload) })
+      // text/plain + no-cors: обработчик Google Apps Script не отвечает на предварительные CORS-запросы
+      fetch(C.endpoint, { method: 'POST', mode: 'no-cors', headers: { 'Content-Type': 'text/plain;charset=utf-8' }, body: JSON.stringify(payload) })
         .then(function (r) { if (!r.ok && r.type !== 'opaque') throw new Error(r.status); })
         .then(function () {
           goal('lead');
