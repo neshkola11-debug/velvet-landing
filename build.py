@@ -31,13 +31,13 @@ def head(title, desc, path):
     metrika = ""
     if I.get("yandex_metrika_id"):
         mid = I["yandex_metrika_id"]
-        metrika = f"""<script>(function(m,e,t,r,i,k,a){{m[i]=m[i]||function(){{(m[i].a=m[i].a||[]).push(arguments)}};m[i].l=1*new Date();k=e.createElement(t),a=e.getElementsByTagName(t)[0],k.async=1,k.src=r,a.parentNode.insertBefore(k,a)}})(window,document,"script","https://mc.yandex.ru/metrika/tag.js","ym");ym({mid},"init",{{clickmap:true,trackLinks:true,accurateTrackBounce:true,webvisor:true}});</script>"""
+        metrika = f"""<script>(function(m,e,t,r,i,k,a){{m[i]=m[i]||function(){{(m[i].a=m[i].a||[]).push(arguments)}};m[i].l=1*new Date();k=e.createElement(t),a=e.getElementsByTagName(t)[0],k.async=1,k.src=r,a.parentNode.insertBefore(k,a)}})(window,document,"script","https://mc.yandex.ru/metrika/tag.js","ym");ym({mid},"init",{{clickmap:true,trackLinks:true,accurateTrackBounce:true,webvisor:true}});</script><noscript><div><img src="https://mc.yandex.ru/watch/{mid}" style="position:absolute;left:-9999px" alt=""></div></noscript>"""
     vk = ""
     if I.get("vk_pixel_id"):
         vid = I["vk_pixel_id"]
         vk = f"""<script>var _tmr=window._tmr||(window._tmr=[]);_tmr.push({{id:"{vid}",type:"pageView",start:(new Date()).getTime()}});(function(d,w,id){{if(d.getElementById(id))return;var ts=d.createElement("script");ts.async=true;ts.id=id;ts.src="https://top-fwz1.mail.ru/js/code.js";var s=d.getElementsByTagName("script")[0];s.parentNode.insertBefore(ts,s)}})(document,window,"tmr-code");</script>"""
     cfg = json.dumps({
-        "endpoint": I.get("form_endpoint", ""), "metrika": I.get("yandex_metrika_id", "") or None,
+        "endpoint": I.get("form_endpoint", ""), "metrika": int(I["yandex_metrika_id"]) if I.get("yandex_metrika_id") else None,
         "phone": S["phone"], "phoneLink": S["phone_link"], "vkWrite": S["vk_write"],
         "callback": S["callback_minutes"],
     }, ensure_ascii=False)
