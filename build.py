@@ -54,15 +54,15 @@ def head(title, desc, path):
 <meta name="theme-color" content="#942539">
 <link rel="icon" href="/favicon.png">
 <link rel="apple-touch-icon" href="/apple-touch-icon.png">
-<link rel="preload" href="/assets/fonts/playfair-display-cyrillic-600-normal.woff2" as="font" type="font/woff2" crossorigin>
-<link rel="preload" href="/assets/fonts/montserrat-cyrillic-400-normal.woff2" as="font" type="font/woff2" crossorigin>
+<link rel="preload" href="/assets/fonts/lora-cyrillic-400-normal.woff2" as="font" type="font/woff2" crossorigin>
+<link rel="preload" href="/assets/fonts/golos-text-cyrillic-400-normal.woff2" as="font" type="font/woff2" crossorigin>
 <link rel="stylesheet" href="/assets/css/style.css">
 <script>window.VL={cfg};</script>
 {metrika}{vk}
 </head>
 <body>
 <header class="top"><div class="wrap">
-  <a class="brand" href="/"><img src="/assets/img/logo.png" alt="" width="40" height="40"><span>Velvet Laser</span></a>
+  <a class="brand" href="/"><img src="/assets/img/logo.png" alt="" width="38" height="38"><span>Velvet Laser</span></a>
   <a class="top-phone" href="tel:{S['phone_link']}">{S['phone']}</a>
 </div></header>
 """
@@ -92,40 +92,60 @@ def footer(cta_label=None):
 """
 
 
-def visit_steps():
-    return f"""<ol class="steps">
-  <li><b>Заявка</b><span>Оставляете номер — администратор перезванивает в течение {S['callback_minutes']} минут и подбирает удобное время.</span></li>
-  <li><b>Знакомство</b><span>Мастер коротко спрашивает о ваших ожиданиях и самочувствии, вы подписываете карту гостя.</span></li>
-  <li><b>Процедура</b><span>Интенсивность подбираем под вас и спрашиваем, комфортно ли.</span></li>
-  <li><b>Отдых</b><span>После — чай или кофе в зоне отдыха. Торопиться не нужно.</span></li>
-  <li><b>Без давления</b><span>Если спросите, мастер расскажет, что можно делать дальше. Если нет — просто будем рады видеть вас снова.</span></li>
-</ol>"""
+def ticket(kicker, name, price, old, left, right, extra=""):
+    return f"""<div class="ticket-wrap"><div class="ticket" aria-label="Приглашение на первый визит">
+  <p class="t-kicker">{kicker}</p>
+  <p class="t-name">{name}</p>
+  <p class="t-price">{price}</p>
+  <p class="t-old">{old}</p>{extra}
+  <div class="t-foot"><span>{left}</span><span>{right}</span></div>
+</div></div>"""
+
+
+def facts():
+    return f"""<ul class="facts">
+  <li>Центр, {S['address']}</li><li>Ежедневно 9:00–21:00</li><li>Чай после процедуры</li>
+</ul>"""
+
+
+def visit_block(photo, alt, steps):
+    li = "".join(f"<li><div><b>{t}</b><span>{d}</span></div></li>" for t, d in steps)
+    return f"""<section><div class="wrap visit">
+  <div class="arch">{img(photo, alt, big=True)}</div>
+  <div><h2>Как пройдёт ваш визит</h2>
+  <ol class="steps">{li}</ol>
+  <p class="promise">О курсах мастер расскажет, только если вы спросите. Решение всегда за вами.</p></div>
+</div></section>"""
 
 
 def studio_block(photos):
     figs = "".join(f'<figure class="{c}">{img(n, a)}</figure>' for n, a, c in photos)
-    return f"""<section class="alt"><div class="wrap">
-  <div class="sec-head"><span class="eyebrow">Студия</span><h2>Здесь спокойно</h2>
-  <p class="muted">Тихие кабинеты, зона отдыха и чай после процедуры. В холодное время года кофе или чай можно взять с собой.</p></div>
-  <div class="gallery">{figs}</div>
+    return f"""<section class="blush"><div class="wrap">
+  <div class="sec-head"><h2>Здесь спокойно</h2>
+  <p>Небольшая студия в центре: тихие кабинеты, мягкий свет, цветы на стойке администратора. После процедуры можно посидеть с чаем или кофе и никуда не спешить.</p></div>
+  <div class="mosaic">{figs}</div>
 </div></section>"""
 
 
-def team_block():
-    return f"""<section><div class="wrap split">
-  <div class="split-photo">{img('team', 'Мастера студии Velvet Laser', big=True)}</div>
-  <div><span class="eyebrow">Кто делает</span><h2>Мастера студии</h2>
-  <p>Процедуры ведут мастера Velvet Laser. Они регулярно учатся новым техникам и работают по рекомендациям производителей оборудования.</p>
-  <p class="muted">Мы рекомендуем только то, что действительно нужно. Никаких лишних процедур и продаж «в лоб».</p></div>
+def trust_block():
+    return f"""<section><div class="wrap trust">
+  <div class="photo">{img('team', 'Мастера студии Velvet Laser', big=True)}</div>
+  <div><h2>Почему к нам возвращаются</h2>
+  <ul class="points">
+    <li><b>Мастера, которые слушают</b><span>Спрашиваем, как вы себя чувствуете, и подстраиваем процедуру под вас. Мастера регулярно учатся и работают по рекомендациям производителей оборудования.</span></li>
+    <li><b>Честная цена</b><span>Цена на сайте — это цена в студии. Никаких доплат, о которых вы узнаёте на месте.</span></li>
+    <li><b>Без давления</b><span>Не продаём то, что вам не нужно. Решение о курсе принимаете вы, а не мастер.</span></li>
+    <li><b>Студия с 2023 года</b><span>Работаем в центре Сыктывкара, во ВКонтакте нас читают больше 2 500 человек.</span></li>
+  </ul></div>
 </div></section>"""
 
 
 def contacts_block():
-    return f"""<section class="alt"><div class="wrap two-col contacts">
-  <div><span class="eyebrow">Как нас найти</span><h2>{S['address']}</h2>
+    return f"""<section class="blush"><div class="wrap contacts">
+  <div><h2>Как нас найти</h2>
   <dl>
-    <div><dt>Адрес</dt><dd>{S['city']}, {S['address']} — {S['address_note']}</dd></div>
-    <div><dt>Время работы</dt><dd>{S['hours'].capitalize()}</dd></div>
+    <div><dt>Адрес</dt><dd>{S['city']}, {S['address']}</dd></div>
+    <div><dt>Часы работы</dt><dd>{S['hours'].capitalize()}</dd></div>
     <div><dt>Телефон</dt><dd><a href="tel:{S['phone_link']}">{S['phone']}</a></dd></div>
     <div><dt>ВКонтакте</dt><dd><a href="{S['vk']}" target="_blank" rel="noopener">vk.com/velvetlaser11</a></dd></div>
   </dl></div>
@@ -133,142 +153,146 @@ def contacts_block():
 </div></section>"""
 
 
-def lead_form(title, options, cta):
+def book_block(title, sub, offers, extra_rules, options, cta):
+    off = "".join(f'<div class="offer"><b>{t}</b><div class="p">{p}{f" <s>{o}</s>" if o else ""}</div><span>{d}</span></div>'
+                  for t, p, o, d in offers)
+    rules = "".join(f"<li>{r}</li>" for r in extra_rules)
     opts = "".join(
         f'<label><input type="radio" name="offer" value="{v}"{" checked" if i == 0 else ""}><span>{t}</span></label>'
         for i, (v, t) in enumerate(options))
-    return f"""<section id="zapis"><div class="wrap two-col">
-  <div><span class="eyebrow">Запись</span><h2>{title}</h2>
-  <p class="muted">Оставьте номер — администратор позвонит в течение {S['callback_minutes']} минут с 09:00 до 21:00 и подберёт удобное время.</p>
-  <p class="small muted">Цены — {P['for_whom']}, до {P['until']}.</p></div>
+    return f"""<section id="zapis" class="book"><div class="wrap book-grid">
+  <div><div class="sec-head"><h2>{title}</h2><p>{sub}</p></div>
+  <div class="offers">{off}</div>
+  <ul class="rules">
+    <li>Цены — для первого посещения студии, до {P['until']} включительно. Одна акционная процедура на гостя.</li>
+    {rules}
+    <li>Оформите абонемент в течение {P['trial_free_days']} дней после визита — стоимость пробного вычтем из абонемента.</li>
+    <li>Места ограничены расписанием мастеров. <a href="/akciya/">Полные правила акции</a></li>
+  </ul></div>
   <form class="form-card lead-form" novalidate>
-    <div class="field"><label>Что выбираете</label><div class="choice">{opts}</div></div>
+    <h3>Оставьте номер</h3>
+    <p class="sub">Администратор перезвонит в течение {S['callback_minutes']} минут с 9:00 до 21:00 и подберёт удобное время. Запись ни к чему не обязывает.</p>
+    <div class="field"><span>Что выбираете</span><div class="choice">{opts}</div></div>
     <div class="field"><label for="f-name">Как к вам обращаться</label><input id="f-name" name="name" autocomplete="given-name" required></div>
     <div class="field"><label for="f-phone">Телефон</label><input id="f-phone" name="phone" type="tel" inputmode="tel" autocomplete="tel" placeholder="+7 (___) ___-__-__" required></div>
-    <div class="field"><label>Когда удобнее прийти</label><div class="choice">
-      <label><input type="radio" name="time" value="утро"><span>Утро</span></label>
-      <label><input type="radio" name="time" value="день"><span>День</span></label>
-      <label><input type="radio" name="time" value="вечер"><span>Вечер</span></label>
+    <div class="field"><span>Когда удобнее прийти</span><div class="choice">
+      <label><input type="radio" name="time" value="утро"><span>Утром</span></label>
+      <label><input type="radio" name="time" value="день"><span>Днём</span></label>
+      <label><input type="radio" name="time" value="вечер"><span>Вечером</span></label>
     </div></div>
-    <div aria-hidden="true" style="position:absolute;left:-9999px;width:1px;height:1px;overflow:hidden"><label>Сайт<input name="website" tabindex="-1" autocomplete="off"></label></div>
-    <label class="agree"><input type="checkbox" name="agree" value="1"><span>Даю <a href="/soglasie/" target="_blank">согласие на обработку персональных данных</a> и подтверждаю, что ознакомлен(а) с <a href="/politika/" target="_blank">политикой</a>.</span></label>
+    <div class="hp" aria-hidden="true"><label>Сайт<input name="website" tabindex="-1" autocomplete="off"></label></div>
+    <label class="agree"><input type="checkbox" name="agree" value="1" aria-label="Согласие на обработку персональных данных"><span>Даю <a href="/soglasie/" target="_blank">согласие на обработку персональных данных</a> и подтверждаю, что ознакомлен(а) с <a href="/politika/" target="_blank">политикой</a>.</span></label>
     <button class="btn btn-block" type="submit" data-label="{cta}">{cta}</button>
     <div class="form-msg" role="status" aria-live="polite"></div>
     <div class="form-alt">
-      <a class="btn btn-ghost" href="tel:{S['phone_link']}">Позвонить</a>
-      <a class="btn btn-ghost" href="{S['vk_write']}" target="_blank" rel="noopener">Написать в ВК</a>
+      <a class="btn btn-line" href="tel:{S['phone_link']}">Позвонить</a>
+      <a class="btn btn-line" href="{S['vk_write']}" target="_blank" rel="noopener">Написать в ВК</a>
     </div>
   </form>
 </div></section>"""
 
 
-def faq(items):
+def faq_contra(contra_html, items):
     body = "".join(f"<details><summary>{q}</summary><p>{a}</p></details>" for q, a in items)
-    return f"""<section class="alt"><div class="wrap two-col">
-  <div><span class="eyebrow">Вопросы</span><h2>Что обычно спрашивают</h2></div>
-  <div class="faq">{body}</div>
+    return f"""<section><div class="wrap two">
+  <div><h2>Кому процедура не подойдёт</h2>
+  <p class="muted">Если сомневаетесь — напишите нам до записи, подскажем.</p>
+  <div class="contra">{contra_html}<span class="w">{L['warning']}</span></div></div>
+  <div><h2>Частые вопросы</h2><div class="faq">{body}</div></div>
 </div></section>"""
 
 
-def rules_list(extra):
-    li = "".join(f"<li>{x}</li>" for x in extra)
-    return f"""<div class="rules"><b>Условия акции</b><ul>
-  <li>Цена действует {P['for_whom']} — одна акционная процедура на гостя.</li>
-  <li>Срок — до {P['until']} включительно.</li>
-  {li}
-  <li>Оформите абонемент в течение {P['trial_free_days']} дней после пробного визита — его стоимость вычтем из абонемента.</li>
-  <li>Количество мест ограничено расписанием мастеров. <a href="/akciya/">Полные правила акции</a></li>
-</ul></div>"""
+def cross_block(title, text, href, photo, alt):
+    return f"""<section><div class="wrap"><div class="cross">
+  <div><h3>{title}</h3><p>{text}</p><a class="btn btn-line" href="{href}">Посмотреть</a></div>
+  <div class="arch">{img(photo, alt)}</div>
+</div></div></section>"""
 
 
 # ---------- Массаж лица ----------
 def page_face():
     o = O["face"]
-    dur = f"<span>{o['duration']}</span>" if o.get("duration") else ""
     h = head("Массаж лица за 1 290 ₽ в Сыктывкаре — Velvet Laser",
-             f"Классический, скульптурный или буккальный массаж лица за 1 290 ₽ для первого посещения, до {P['until']}. Студия в центре Сыктывкара, {S['address']}.",
+             f"Классический, скульптурный или буккальный массаж лица за 1 290 ₽ для первого посещения, до {P['until']}. Спокойная студия в центре Сыктывкара, {S['address']}.",
              "/massazh-lica/")
     body = f"""
 <main>
 <section class="hero"><div class="wrap">
-  <div>
-    <span class="eyebrow">Для первого посещения · до {P['until']}</span>
-    <h1>Массаж лица за&nbsp;{rub(o['price'])}</h1>
-    <p class="lead">Время, когда заботятся о вас. Классический, скульптурный или буккальный — выберите сами или решите вместе с мастером.</p>
-    <div class="price-line"><span class="price-now">{rub(o['price'])}</span><span class="price-old">обычно <s>{o['price_regular']}</s></span></div>
+  <div class="hero-media">
+    <div class="arch">{img('f-hero', 'Мастер делает массаж лица гостье студии', big=True, eager=True)}</div>
+    {ticket('Приглашение на первый визит', 'Массаж лица на выбор', '1 290<small>₽</small>', f"обычно <s>{o['price_regular']}</s>", f"до {P['until']}", 'Вдвоём — 2 290 ₽')}
+  </div>
+  <div class="hero-copy">
+    <h1>Вы заботитесь обо&nbsp;всех. Этот час&nbsp;— о&nbsp;вас</h1>
+    <p class="lead">Массаж лица в тихом кабинете в центре Сыктывкара. Тёплые руки мастера, мягкий свет и чай после — можно наконец выдохнуть.</p>
+  </div>
+  <div class="hero-act">
     <div class="hero-cta">
       <a class="btn" href="#zapis">Записаться за {rub(o['price'])}</a>
-      <a class="btn btn-ghost" href="#zapis">Вдвоём с подругой — {rub(o['pair_price'])}</a>
+      <p class="hero-note">Перезвоним за {S['callback_minutes']} минут и подберём время. Запись ни к чему не обязывает.</p>
     </div>
-    <div class="hero-note">Оформите абонемент в течение {P['trial_free_days']} дней — <b>пробный визит станет бесплатным</b>: его стоимость вычтем.</div>
-    <div class="facts"><span>центр, {S['address']}</span><span>с 09:00 до 21:00</span><span>чай после процедуры</span>{dur}</div>
-    <p class="warning-line">{L['warning']}</p>
+    {facts()}
+    <p class="warn-line">{L['warning']}</p>
   </div>
-  <div class="hero-photo">{img('face-hero', 'Массаж лица в студии Velvet Laser', big=True, eager=True)}</div>
 </div></section>
 
-<section class="alt"><div class="wrap">
-  <div class="sec-head"><span class="eyebrow">Три массажа на выбор</span><h2>Какой массаж выбрать</h2>
-  <p class="muted">Все три — по одной цене. Не знаете, что ближе, — мастер подскажет на месте.</p></div>
-  <ol class="steps steps-3">
-    <li><b>Классический</b><span>Мягкие, размеренные движения по лицу и шее. Подходит, чтобы просто отдохнуть и выдохнуть.</span></li>
-    <li><b>Скульптурный</b><span>Более глубокая и плотная проработка. По ощущениям интенсивнее классического.</span></li>
-    <li><b>Буккальный</b><span>Мастер работает в том числе с внутренней стороны щёк — в перчатках, аккуратно и с вашего согласия.</span></li>
-  </ol>
+<section class="feel"><div class="wrap">
+  <h2>Знакомо?</h2>
+  <div>
+    <ul>
+      <li>Весь день работа, дети, дом, а на себя остаётся пять минут перед сном.</li>
+      <li>Хочется, чтобы кто-то просто позаботился о вас — без советов и уговоров.</li>
+      <li>Давно собирались на массаж, но всё время что-то важнее.</li>
+    </ul>
+    <p>Для этого и есть наш час. Вы ложитесь, закрываете глаза, а дальше о вас заботимся мы.</p>
+  </div>
 </div></section>
 
-<section><div class="wrap split rev">
-  <div class="split-photo">{img('face-master', 'Мастер делает массаж лица', big=True)}</div>
-  <div><span class="eyebrow">Как проходит визит</span><h2>Спокойно и без спешки</h2>{visit_steps()}</div>
+<section><div class="wrap">
+  <div class="sec-head"><h2>Три массажа — одна цена</h2>
+  <p>Выберите тот, что ближе, или решите вместе с мастером на месте. Любой из трёх — {rub(o['price'])} для первого визита.</p></div>
+  <div class="kinds">
+    <div class="kind"><div class="arch">{img('f-calm', 'Классический массаж лица')}</div>
+      <h3>Классический</h3><p>Мягкий и размеренный. Для тех, кто пришёл отдохнуть и выключить голову.</p><span class="tag">обычно 2 190 ₽</span></div>
+    <div class="kind"><div class="arch">{img('f-sculpt', 'Скульптурный массаж лица')}</div>
+      <h3>Скульптурный</h3><p>Плотнее и глубже. Мастер не спеша прорабатывает лицо и шею, ощущения интенсивнее классического.</p><span class="tag">обычно 2 690 ₽</span></div>
+    <div class="kind"><div class="arch">{img('f-buccal', 'Буккальный массаж лица')}</div>
+      <h3>Буккальный</h3><p>Мастер работает в том числе с внутренней стороны щёк — в перчатках, бережно и с вашего согласия.</p><span class="tag">обычно 2 690 ₽</span></div>
+  </div>
+  <p class="kinds-note">Не знаете, что выбрать? Мастер подскажет — цена от этого не изменится.</p>
 </div></section>
 
-{studio_block([('tea', 'Кофе и чай в зоне отдыха', ''), ('face-hands', 'Массаж лица', ''), ('decor', 'Интерьер студии', ''), ('art', 'Картина в студии', ''), ('outside', 'Вход в студию Velvet Laser с улицы', 'wide'), ('reception', 'Стойка администратора', ''), ('face-calm', 'Гостья на массаже лица', '')])}
+{visit_block('room', 'Кабинет студии, где проходит массаж', [
+    ('Звонок', f"Администратор перезванивает в течение {S['callback_minutes']} минут и подбирает удобное время."),
+    ('Знакомство', 'Мастер спрашивает о самочувствии и о том, чего вам хочется от процедуры.'),
+    ('Массаж', 'Вы лежите с закрытыми глазами. Интенсивность подбираем под вас и спрашиваем, комфортно ли.'),
+    ('Чай', 'После — чай или кофе в зоне отдыха. Торопиться не нужно.'),
+])}
 
-{team_block()}
+{studio_block([('tea', 'Кофе и чай в зоне отдыха', 'arch tall'), ('art', 'Картина в интерьере студии', ''), ('decor', 'Детали интерьера студии', ''), ('outside', 'Вход в студию Velvet Laser', 'wide')])}
 
-<section id="ceny" class="alt"><div class="wrap">
-  <div class="sec-head"><span class="eyebrow">Цены</span><h2>Сколько стоит</h2></div>
-  <table class="price-table">
-    <thead><tr><th>Что</th><th>Обычно</th><th>По акции</th></tr></thead>
-    <tbody>
-      <tr><td>Массаж лица — классический, скульптурный или буккальный</td><td class="num"><s>{o['price_regular']}</s></td><td class="num accent">{rub(o['price'])}</td></tr>
-      <tr><td>Вдвоём с подругой — два массажа лица, обе впервые в студии</td><td class="num"><s>{rub(o['price'] * 2)}</s></td><td class="num accent">{rub(o['pair_price'])}</td></tr>
-      <tr><td>Курс после пробного: 5 процедур</td><td class="num" colspan="2">от 10&nbsp;000 до 12&nbsp;500&nbsp;₽</td></tr>
-    </tbody>
-  </table>
-  {rules_list(["«Вдвоём с подругой» — для двух гостей, которые приходят в студию впервые."])}
-</div></section>
+{trust_block()}
 
-<section><div class="wrap two-col">
-  <div><span class="eyebrow">Важно</span><h2>Кому процедура не подойдёт</h2>
-  <p class="muted">Если сомневаетесь — напишите нам до записи, мы подскажем.</p></div>
-  <div class="contra">Массаж лица не проводится при беременности и лактации, онкологических заболеваниях, острых инфекционных заболеваниях, кожных заболеваниях в зоне массажа, эпилепсии, кардиостимуляторе.
-  <span class="warn">{L['warning']}</span></div>
-</div></section>
+{book_block('Ваше приглашение', 'Выберите, как хотите прийти, и оставьте номер — остальное сделаем мы.', [
+    ('Массаж лица на выбор', rub(o['price']), o['price_regular'], 'Классический, скульптурный или буккальный.'),
+    ('Вдвоём с подругой', rub(o['pair_price']), rub(o['price'] * 2), 'Два массажа лица, если вы обе впервые в студии.'),
+], ['«Вдвоём с подругой» — для двух гостей, которые приходят в студию впервые.'],
+    [('Массаж лица — 1290', f"Массаж лица — {rub(o['price'])}"), ('Вдвоём с подругой — 2290', f"Вдвоём с подругой — {rub(o['pair_price'])}")],
+    f"Записаться за {rub(o['price'])}")}
 
-{faq([
+{faq_contra('Массаж лица не проводится при беременности и лактации, онкологических заболеваниях, острых инфекционных заболеваниях, кожных заболеваниях в зоне массажа, эпилепсии, кардиостимуляторе.', [
     ("Это больно?", "Нет. Ощущения как от плотного массажа. Мастер спрашивает, комфортно ли вам, и меняет интенсивность."),
-    ("Какой массаж выбрать?", "Любой из трёх стоит 1 290 ₽. Если не знаете, что ближе, — мастер подскажет на месте, исходя из ваших ожиданий."),
-    ("Будут ли уговаривать на курс?", f"Нет. Мастер расскажет о курсе, только если вы спросите. Если решите оформить абонемент в течение {P['trial_free_days']} дней, пробный визит станет бесплатным — его стоимость вычтем."),
-    ("Сколько процедур нужно?", "Зависит от вашей задачи. Мастер честно скажет после первой процедуры."),
+    ("Какой массаж выбрать?", f"Любой из трёх стоит {rub(o['price'])}. Если не знаете, что ближе, — мастер подскажет на месте."),
+    ("Будут ли уговаривать на курс?", f"Нет. О курсе расскажем, только если спросите. Решите оформить абонемент в течение {P['trial_free_days']} дней — стоимость первого визита вычтем."),
     ("Я уже была у вас. Акция для меня?", "Цена действует для первого посещения студии. Для постоянных гостей есть абонементы и программа «для подруг»: 1 000 ₽ на баланс за каждую приглашённую."),
-    ("Как прийти вдвоём с подругой?", f"Выберите в форме «Вдвоём с подругой» — два массажа лица за {rub(o['pair_price'])}. Акция для двух гостей, которые приходят в студию впервые."),
+    ("Как прийти вдвоём с подругой?", f"Выберите в форме «Вдвоём с подругой» — два массажа лица за {rub(o['pair_price'])}, если вы обе впервые в студии."),
     ("Можно подарить?", "Да, у нас есть подарочный сертификат на любой номинал."),
     ("Как перенести запись?", "Напишите или позвоните нам не позже чем за 24 часа."),
 ])}
 
-{lead_form('Записаться на массаж лица', [('Массаж лица — 1290', f"Массаж лица — {rub(o['price'])}"), ('Вдвоём с подругой — 2290', f"Вдвоём с подругой — {rub(o['pair_price'])}")], f"Записаться за {rub(o['price'])}")}
-
 {contacts_block()}
 
-<section><div class="wrap">
-  <div class="cross">
-    <div><span class="eyebrow" style="color:#e6b9c0">Для тела</span><h3>LPG-массаж за {rub(O['lpg']['price'])}</h3>
-    <p>{O['lpg']['duration'].capitalize()} аппаратного массажа тела. Тоже для первого посещения, до {P['until']}.</p>
-    <p style="margin-top:16px"><a class="btn" href="/{O['lpg']['slug']}/">Подробнее</a></p></div>
-    {img('lpg-hero', 'LPG-массаж в студии')}
-  </div>
-</div></section>
+{cross_block(f"Для тела — LPG-массаж от {rub(O['lpg']['price'])}", f"40 минут аппаратного массажа, после которых телу легче. Тоже для первого визита, до {P['until']}.", f"/{O['lpg']['slug']}/", 'l-hero', 'LPG-массаж в студии')}
 </main>
 """
     return h + body + footer(f"Записаться за {rub(o['price'])}")
@@ -277,91 +301,84 @@ def page_face():
 # ---------- LPG ----------
 def page_lpg():
     o = O["lpg"]
-    h = head("LPG-массаж за 890 ₽ в Сыктывкаре — Velvet Laser",
-             f"LPG-массаж 40 минут за 890 ₽ для первого посещения, до {P['until']}. Или вакуумный массаж всего тела без костюма. Центр Сыктывкара, {S['address']}.",
+    h = head("LPG-массаж от 890 ₽ в Сыктывкаре — Velvet Laser",
+             f"LPG-массаж 40 минут за 890 ₽ или вакуумный массаж всего тела для первого посещения, до {P['until']}. Студия в центре Сыктывкара, {S['address']}.",
              "/lpg/")
     body = f"""
 <main>
 <section class="hero"><div class="wrap">
-  <div>
-    <span class="eyebrow">Для первого посещения · до {P['until']}</span>
-    <h1>LPG-массаж за&nbsp;{rub(o['price'])}</h1>
-    <p class="lead">{o['duration'].capitalize()} аппаратного массажа тела — ощущение лёгкости и время, которое вы посвящаете себе.</p>
-    <div class="price-line"><span class="price-now">{rub(o['price'])}</span><span class="price-old">обычно <s>{o['price_regular']}</s></span></div>
+  <div class="hero-media">
+    <div class="arch">{img('l-hero', 'Мастер проводит LPG-массаж', big=True, eager=True)}</div>
+    {ticket('Приглашение на первый визит', f"LPG-массаж, {o['duration']}", '890<small>₽</small>', f"обычно <s>{o['price_regular']}</s> · костюм {rub(o['suit_price'])}", f"до {P['until']}", 'Вакуум — тоже 890 ₽')}
+  </div>
+  <div class="hero-copy">
+    <h1>Сорок минут, после которых телу легче</h1>
+    <p class="lead">LPG-массаж в спокойной студии в центре Сыктывкара. Вы просто лежите, аппарат делает своё дело, а мастер следит, чтобы было комфортно.</p>
+  </div>
+  <div class="hero-act">
     <div class="hero-cta">
       <a class="btn" href="#zapis">Записаться за {rub(o['price'])}</a>
-      <a class="btn btn-ghost" href="#vybor">Без костюма — вакуумный массаж за {rub(o['vacuum_price'])}</a>
+      <p class="hero-note">Перезвоним за {S['callback_minutes']} минут и подберём время. Запись ни к чему не обязывает.</p>
     </div>
-    <div class="hero-note">Для LPG нужен личный костюм — <b>{rub(o['suit_price'])}</b>. Он остаётся у вас и пригодится на курсе. Оформите абонемент в течение {P['trial_free_days']} дней — пробный визит станет бесплатным.</div>
-    <div class="facts"><span>центр, {S['address']}</span><span>с 09:00 до 21:00</span><span>чай после процедуры</span></div>
-    <p class="warning-line">{L['warning']}</p>
+    {facts()}
+    <p class="warn-line">{L['warning']}</p>
   </div>
-  <div class="hero-photo">{img('lpg-hero', 'LPG-массаж в студии Velvet Laser', big=True, eager=True)}</div>
 </div></section>
 
-<section id="vybor" class="alt"><div class="wrap">
-  <div class="sec-head"><span class="eyebrow">Два варианта</span><h2>LPG или вакуум</h2>
-  <p class="muted">Оба — по {rub(o['price'])} для первого посещения. Выберите, что ближе.</p></div>
-  <ol class="steps">
-    <li><b>LPG-массаж · {o['duration']}</b><span>Аппарат с роликами работает по телу через специальный костюм. Обычно {o['price_regular']}, по акции — {rub(o['price'])} + личный костюм {rub(o['suit_price'])}.</span></li>
-    <li><b>Вакуумный массаж всего тела</b><span>Аппаратный массаж без костюма. Обычно {o['vacuum_regular']}, по акции — {rub(o['vacuum_price'])}.</span></li>
-  </ol>
+<section class="feel"><div class="wrap">
+  <h2>Знакомо?</h2>
+  <div>
+    <ul>
+      <li>Целый день за столом или за рулём, а вечером тело будто чужое.</li>
+      <li>Хочется позаботиться о себе, но на спортзал нет ни сил, ни времени.</li>
+      <li>Давно хотели попробовать LPG, но непонятно, с чего начать и сколько это стоит.</li>
+    </ul>
+    <p>Начните с одного визита за {rub(o['price'])}. Почувствуете, как это, — а дальше решите сами.</p>
+  </div>
 </div></section>
 
-<section><div class="wrap split rev">
-  <div class="split-photo">{img('lpg-process', 'Мастер проводит LPG-массаж', big=True)}</div>
-  <div><span class="eyebrow">Как проходит визит</span><h2>Спокойно и без спешки</h2>{visit_steps()}</div>
+<section><div class="wrap">
+  <div class="sec-head"><h2>Два варианта — одна цена</h2>
+  <p>Оба для первого визита стоят {rub(o['price'])}. Выберите, что ближе, или спросите администратора.</p></div>
+  <div class="kinds" style="grid-template-columns:repeat(auto-fit,minmax(260px,1fr))">
+    <div class="kind"><div class="arch">{img('l-arc', 'LPG-массаж: гостья в костюме на кушетке')}</div>
+      <h3>LPG-массаж, {o['duration']}</h3><p>Аппарат с роликами работает по телу через специальный костюм. Ощущения как от плотного массажа.</p><span class="tag">{rub(o['price'])} + личный костюм {rub(o['suit_price'])}, обычно {o['price_regular']}</span></div>
+    <div class="kind"><div class="arch">{img('l-device', 'Аппарат для массажа тела в кабинете студии')}</div>
+      <h3>Вакуумный массаж всего тела</h3><p>Аппаратный массаж без костюма. Подойдёт, если хотите попробовать, ничего не покупая заранее.</p><span class="tag">{rub(o['vacuum_price'])}, обычно {o['vacuum_regular']}</span></div>
+  </div>
+  <p class="kinds-note">Костюм для LPG личный: он остаётся у вас и пригодится, если решите продолжить.</p>
 </div></section>
 
-{studio_block([('tea', 'Кофе и чай в зоне отдыха', ''), ('lpg-arc', 'Аппарат для LPG-массажа', ''), ('decor', 'Интерьер студии', ''), ('room', 'Кабинет студии', ''), ('outside', 'Вход в студию Velvet Laser с улицы', 'wide'), ('reception', 'Стойка администратора', ''), ('art', 'Картина в студии', '')])}
+{visit_block('reception', 'Стойка администратора в студии', [
+    ('Звонок', f"Администратор перезванивает в течение {S['callback_minutes']} минут и подбирает удобное время."),
+    ('Знакомство', 'Мастер спрашивает о самочувствии и помогает с костюмом, если вы выбрали LPG.'),
+    ('Массаж', f"{o['duration'].capitalize()} — вы лежите, интенсивность подбираем под вас."),
+    ('Чай', 'После — чай или кофе в зоне отдыха. Торопиться не нужно.'),
+])}
 
-{team_block()}
+{studio_block([('tea', 'Кофе и чай в зоне отдыха', 'arch tall'), ('room', 'Кабинет студии', ''), ('decor', 'Детали интерьера студии', ''), ('outside', 'Вход в студию Velvet Laser', 'wide')])}
 
-<section id="ceny" class="alt"><div class="wrap">
-  <div class="sec-head"><span class="eyebrow">Цены</span><h2>Сколько стоит</h2></div>
-  <table class="price-table">
-    <thead><tr><th>Что</th><th>Обычно</th><th>По акции</th></tr></thead>
-    <tbody>
-      <tr><td>LPG-массаж, {o['duration']}</td><td class="num"><s>{o['price_regular']}</s></td><td class="num accent">{rub(o['price'])}</td></tr>
-      <tr><td>Личный костюм для LPG — остаётся у вас</td><td class="num" colspan="2">{rub(o['suit_price'])}</td></tr>
-      <tr><td>Вакуумный массаж всего тела, без костюма</td><td class="num"><s>{o['vacuum_regular']}</s></td><td class="num accent">{rub(o['vacuum_price'])}</td></tr>
-      <tr><td>Курс LPG после пробного: 10 процедур</td><td class="num" colspan="2">16&nbsp;000&nbsp;₽</td></tr>
-      <tr><td>Курс вакуумного массажа всего тела: 10 процедур</td><td class="num" colspan="2">14&nbsp;900&nbsp;₽</td></tr>
-    </tbody>
-  </table>
-  {rules_list(["Акционная цена — на LPG-массаж или на вакуумный массаж всего тела, на выбор."])}
-</div></section>
+{trust_block()}
 
-<section><div class="wrap two-col">
-  <div><span class="eyebrow">Важно</span><h2>Кому процедура не подойдёт</h2>
-  <p class="muted">Если сомневаетесь — напишите нам до записи, мы подскажем.</p></div>
-  <div class="contra"><b>LPG-массаж</b> не проводится при заболеваниях крови и склонности к тромбообразованию, туберкулёзе, опухолях, индивидуальной непереносимости массажа, нарушениях психики. Процедуру откладываем при лихорадке, острых заболеваниях и инфекциях, интоксикации, заболеваниях кожи, кровотечениях, во время беременности и менструации.
-  <p style="margin:12px 0 0"><b>Вакуумный массаж</b> — противопоказания администратор уточнит при записи.</p>
-  <span class="warn">{L['warning']}</span></div>
-</div></section>
+{book_block('Ваше приглашение', 'Выберите процедуру и оставьте номер — остальное сделаем мы.', [
+    (f"LPG-массаж, {o['duration']}", rub(o['price']), o['price_regular'], f"Плюс личный костюм {rub(o['suit_price'])} — он остаётся у вас."),
+    ('Вакуумный массаж всего тела', rub(o['vacuum_price']), o['vacuum_regular'], 'Без костюма и дополнительных покупок.'),
+], ['Акционная цена — на LPG-массаж или на вакуумный массаж всего тела, на выбор.'],
+    [('LPG — 890 + костюм 300', f"LPG — {rub(o['price'])} + костюм"), ('Вакуум всего тела — 890', f"Вакуум — {rub(o['vacuum_price'])}")],
+    f"Записаться за {rub(o['price'])}")}
 
-{faq([
+{faq_contra('<b>LPG-массаж</b> не проводится при заболеваниях крови и склонности к тромбообразованию, туберкулёзе, опухолях, индивидуальной непереносимости массажа, нарушениях психики. Процедуру откладываем при лихорадке, острых заболеваниях и инфекциях, интоксикации, заболеваниях кожи, кровотечениях, во время беременности и менструации.<br><br><b>Вакуумный массаж</b> — противопоказания администратор уточнит при записи.', [
     ("Это больно?", "Нет. Ощущения как от плотного массажа. Мастер спрашивает, комфортно ли вам, и меняет интенсивность."),
-    ("Зачем костюм?", f"LPG-массаж проводится через специальный костюм. Он личный, стоит {rub(o['suit_price'])} и остаётся у вас — на курсе его не нужно покупать снова. Не хотите костюм — выберите вакуумный массаж всего тела по той же цене."),
-    ("Что выбрать — LPG или вакуум?", "Обе процедуры — аппаратный массаж тела. Если сомневаетесь, расскажите администратору о своих ожиданиях — подскажем."),
-    ("Будут ли уговаривать на курс?", f"Нет. Мастер расскажет о курсе, только если вы спросите. Если решите оформить абонемент в течение {P['trial_free_days']} дней, пробный визит станет бесплатным — его стоимость вычтем."),
-    ("Сколько процедур нужно?", "Зависит от вашей задачи. Мастер честно скажет после первой процедуры."),
+    ("Зачем костюм?", f"LPG-массаж проводится через специальный костюм. Он личный, стоит {rub(o['suit_price'])} и остаётся у вас. Не хотите покупать костюм — выберите вакуумный массаж по той же цене."),
+    ("LPG или вакуум?", "Обе процедуры — аппаратный массаж тела. Расскажите администратору, чего хотите, — подскажем."),
+    ("Будут ли уговаривать на курс?", f"Нет. О курсе расскажем, только если спросите. Решите оформить абонемент в течение {P['trial_free_days']} дней — стоимость первого визита вычтем."),
     ("Я уже была у вас. Акция для меня?", "Цена действует для первого посещения студии. Для постоянных гостей есть абонементы и программа «для подруг»: 1 000 ₽ на баланс за каждую приглашённую."),
     ("Как перенести запись?", "Напишите или позвоните нам не позже чем за 24 часа."),
 ])}
 
-{lead_form('Записаться на LPG или вакуум', [('LPG — 890 + костюм 300', f"LPG — {rub(o['price'])} + костюм {rub(o['suit_price'])}"), ('Вакуум всего тела — 890', f"Вакуум всего тела — {rub(o['vacuum_price'])}")], f"Записаться за {rub(o['price'])}")}
-
 {contacts_block()}
 
-<section><div class="wrap">
-  <div class="cross">
-    <div><span class="eyebrow" style="color:#e6b9c0">Для лица</span><h3>Массаж лица за {rub(O['face']['price'])}</h3>
-    <p>Классический, скульптурный или буккальный — на выбор. Тоже для первого посещения, до {P['until']}.</p>
-    <p style="margin-top:16px"><a class="btn" href="/{O['face']['slug']}/">Подробнее</a></p></div>
-    {img('face-hero', 'Массаж лица в студии')}
-  </div>
-</div></section>
+{cross_block(f"Для лица — массаж за {rub(O['face']['price'])}", f"Классический, скульптурный или буккальный — на выбор. Тоже для первого визита, до {P['until']}.", f"/{O['face']['slug']}/", 'f-calm', 'Массаж лица в студии')}
 </main>
 """
     return h + body + footer(f"Записаться за {rub(o['price'])}")
@@ -370,17 +387,16 @@ def page_lpg():
 # ---------- Главная ----------
 def page_index():
     h = head("Velvet Laser — студия в центре Сыктывкара",
-             f"Массаж лица за 1 290 ₽ и LPG-массаж за 890 ₽ для первого посещения, до {P['until']}. {S['address']}.", "/")
+             f"Массаж лица за 1 290 ₽ и LPG-массаж от 890 ₽ для первого посещения, до {P['until']}. {S['address']}.", "/")
     body = f"""
 <main><section class="hero"><div class="wrap" style="grid-template-columns:1fr">
-  <div><span class="eyebrow">Для первого посещения · до {P['until']}</span>
-  <h1>Время для себя — в центре Сыктывкара</h1>
+  <div><h1>Время для себя — в центре Сыктывкара</h1>
   <p class="lead">Выберите процедуру, чтобы узнать подробности и записаться.</p></div>
   <div class="hub">
-    <a href="/{O['face']['slug']}/"><img src="/assets/img/face-hero-s.webp" alt="Массаж лица" loading="lazy"><span><b>Массаж лица — {rub(O['face']['price'])}</b><span class="muted">обычно {O['face']['price_regular']}</span></span></a>
-    <a href="/{O['lpg']['slug']}/"><img src="/assets/img/lpg-hero-s.webp" alt="LPG-массаж" loading="lazy"><span><b>LPG-массаж — {rub(O['lpg']['price'])}</b><span class="muted">обычно {O['lpg']['price_regular']}</span></span></a>
+    <a href="/{O['face']['slug']}/"><img src="/assets/img/f-hero-s.webp" alt="Массаж лица" loading="lazy"><span><b>Массаж лица — {rub(O['face']['price'])}</b><span class="muted">обычно {O['face']['price_regular']}</span></span></a>
+    <a href="/{O['lpg']['slug']}/"><img src="/assets/img/l-hero-s.webp" alt="LPG-массаж" loading="lazy"><span><b>LPG-массаж — от {rub(O['lpg']['price'])}</b><span class="muted">обычно {O['lpg']['price_regular']}</span></span></a>
   </div>
-  <p class="warning-line">{L['warning']}</p>
+  <p class="warn-line">{L['warning']}</p>
 </div></section>
 {contacts_block()}</main>
 """
