@@ -39,7 +39,7 @@
 
   "integrations": {
     "_про_заявки": "Адрес, куда форма отправляет заявку (вебхук amoCRM или другой обработчик). Пока пусто — форма предлагает позвонить или написать в ВК.",
-    "form_endpoint": "",
+    "form_endpoint": "https://script.google.com/macros/s/AKfycbwRgAXQ7ADXPnz10NV46Iqp2ZNBbkzUElssAdEmjty73b9goMqF8sZjQxSb8zbrsiK8mQ/exec",
     "yandex_metrika_id": "113708808",
     "vk_pixel_id": ""
   },
