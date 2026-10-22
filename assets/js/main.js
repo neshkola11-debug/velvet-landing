@@ -34,6 +34,7 @@
     var h = a.getAttribute('href') || '';
     if (h.indexOf('tel:') === 0) goal('phone');
     else if (h.indexOf('vk.com') > -1) goal('vk');
+    else if (h.indexOf('yandex.ru/maps') > -1) goal('maps');
     else if (h === '#zapis') goal('cta');
   });
 

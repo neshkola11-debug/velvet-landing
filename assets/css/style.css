@@ -248,3 +248,21 @@ footer .links{display:flex;flex-wrap:wrap;gap:8px 18px;margin:12px 0}
   footer{padding-bottom:40px}
 }
 @media (prefers-reduced-motion:reduce){*{transition:none!important;scroll-behavior:auto!important}}
+
+/* Отзывы */
+.reviews-head{display:grid;gap:24px;align-items:end;margin-bottom:32px}
+.reviews-head .lead{margin:8px 0 0;color:var(--ink-2)}
+.rating{display:inline-grid;grid-template-columns:auto auto;column-gap:14px;align-items:center;justify-self:start;padding:16px 22px;border-radius:20px;background:var(--blush);color:var(--plum);text-decoration:none}
+.rating b{grid-row:span 2;font-family:Lora,serif;font-weight:500;font-size:44px;line-height:1;color:var(--wine)}
+.rating span{font-size:13.5px;line-height:1.35;color:var(--ink-2)}
+.rating .stars{font-size:16px;letter-spacing:2px;color:var(--wine)}
+.reviews{display:grid;gap:16px}
+.review{margin:0;padding:26px 24px 22px;border-radius:24px;background:var(--paper);border:1px solid var(--sand);display:flex;flex-direction:column;gap:14px}
+.review .stars{color:var(--wine);letter-spacing:3px;font-size:15px}
+.review blockquote{margin:0;font-family:Lora,serif;font-size:17px;line-height:1.55;color:var(--plum);flex:1}
+.review figcaption{display:flex;flex-direction:column;gap:2px;font-size:14px}
+.review figcaption span{color:var(--ink-2);font-size:13px}
+.reviews-more{margin:24px 0 0}
+.reviews-more a{color:var(--wine);font-weight:500}
+@media(min-width:720px){.reviews{grid-template-columns:1fr 1fr}}
+@media(min-width:1024px){.reviews-head{grid-template-columns:1fr auto}.reviews{grid-template-columns:repeat(3,1fr)}}

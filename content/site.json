@@ -14,8 +14,11 @@
     "phone_link": "+79933856496",
     "vk": "https://vk.com/velvetlaser11",
     "vk_write": "https://vk.com/im?sel=-220881221",
-    "map_widget": "https://yandex.ru/map-widget/v1/?text=%D0%A1%D1%8B%D0%BA%D1%82%D1%8B%D0%B2%D0%BA%D0%B0%D1%80%2C%20%D1%83%D0%BB%D0%B8%D1%86%D0%B0%20%D0%9A%D0%BB%D0%B0%D1%80%D1%8B%20%D0%A6%D0%B5%D1%82%D0%BA%D0%B8%D0%BD%2C%2050&z=16",
-    "yandex_maps_url": "",
+    "map_widget": "https://yandex.ru/map-widget/v1/?z=16&ol=biz&oid=54883989771",
+    "yandex_maps_url": "https://yandex.ru/maps/org/velvet_lazer/54883989771/",
+    "yandex_reviews_url": "https://yandex.ru/maps/org/velvet_lazer/54883989771/reviews/",
+    "yandex_rating": "5,0",
+    "yandex_reviews_count": "больше 120 отзывов",
     "callback_minutes": 15
   },
 
