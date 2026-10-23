@@ -52,7 +52,7 @@
       "slug": "massazh-lica",
       "title": "Массаж лица за 1 290 ₽",
       "price": 1290,
-      "price_regular": "от 2 190 до 2 690 ₽",
+      "price_regular": "от 2 290 до 2 790 ₽",
       "duration": "",
       "kinds": ["классический", "скульптурный", "буккальный"],
       "pair_price": 2290
@@ -61,11 +61,11 @@
       "slug": "lpg",
       "title": "LPG-массаж за 890 ₽",
       "price": 890,
-      "price_regular": "1 800 ₽",
+      "price_regular": "1 900 ₽",
       "duration": "40 минут",
       "suit_price": 300,
       "vacuum_price": 890,
-      "vacuum_regular": "1 690 ₽",
+      "vacuum_regular": "1 790 ₽",
       "vacuum_duration": ""
     }
   }
