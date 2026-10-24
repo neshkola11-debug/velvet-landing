@@ -39,7 +39,7 @@
   });
 
   // Прокрутка до цены
-  var priceSec = document.getElementById('ceny');
+  var priceSec = document.getElementById('ceny') || document.getElementById('zapis');
   if (priceSec && 'IntersectionObserver' in window) {
     var seen = false;
     new IntersectionObserver(function (e) { if (e[0].isIntersecting && !seen) { seen = true; goal('price'); } }).observe(priceSec);
