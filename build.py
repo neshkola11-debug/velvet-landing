@@ -351,63 +351,133 @@ def page_lpg():
     booking_details = (booking[:form_start] + booking[form_end:]).replace('id="zapis"', 'id="ceny"').replace('class="wrap book-grid"', 'class="wrap"')
     booking_details = booking_details.replace('</div></section>', '<p style="margin-top:24px"><a class="btn btn-light" href="#zapis">Подобрать время</a></p></div></section>')
     hero_style = """<style>
-.lpg-first .wrap{gap:20px;grid-template-areas:"copy" "act" "media"}
-.lpg-first h1{font-size:clamp(30px,7.2vw,48px);max-width:17em;margin-bottom:12px}
-.lpg-first .eyebrow{font-size:13px;color:var(--wine);font-weight:500;margin:0 0 10px}
-.lpg-first .lead{font-size:16px;line-height:1.5}
-.lpg-first .hero-offer{font-size:24px;line-height:1.25;font-weight:500;color:var(--wine);margin:16px 0 4px}
-.lpg-first .offer-note{font-size:13px;color:var(--ink-2);margin:0}
-.lpg-first .hero-act{scroll-margin-top:76px}
-.lpg-first .form-card{padding:22px 20px;border:1px solid var(--line);box-shadow:0 12px 32px rgba(58,37,41,.05)}
-.lpg-first .form-card h3{font-size:22px}
-.lpg-first .form-card .sub{margin-bottom:14px;font-size:13px}
-.lpg-first .choice span{padding:9px 12px;font-size:13px}
-.lpg-first .agree{font-size:11px;line-height:1.4;margin-bottom:12px}
-.lpg-first .form-alt{margin-top:10px}
-.lpg-first .trust-link{display:inline-block;font-size:13px;margin-top:12px}
-.lpg-first .hero-media{padding:0}
-.lpg-first .hero-media .arch{aspect-ratio:4/3;border-radius:24px}
-.lpg-first .photo-note{font-size:13px;color:var(--ink-2);margin:10px 0 0}
-.lpg-first .warn-line{margin-top:10px}
+.lpg-page{--max:1200px}
+.lpg-page section{padding:68px 0}
+.lpg-page .lpg-first{padding:24px 0 0}
+.lpg-first .wrap{display:grid;gap:22px;grid-template-areas:"copy" "media" "act";padding-bottom:32px}
+.lpg-first .eyebrow,.lpg-page .eyebrow{font:500 11px/1.5 var(--sans);letter-spacing:.12em;text-transform:uppercase;color:var(--wine);margin:0 0 14px}
+.lpg-first h1{font-size:clamp(38px,8vw,66px);line-height:1.06;max-width:12em;letter-spacing:-.035em;margin-bottom:16px}
+.lpg-first h1 em{color:var(--wine);font-weight:400}
+.lpg-first .lead{font-size:16px;line-height:1.6;max-width:32em}
+.lpg-first .hero-media{padding:0;position:relative}
+.lpg-first .hero-media .arch{aspect-ratio:16/10;border-radius:100px 100px 20px 20px}
+.lpg-first .hero-media img{object-position:50% 52%}
+.lpg-first .photo-label{position:absolute;bottom:14px;left:14px;right:14px;background:rgba(251,247,244,.96);padding:10px 14px;border-radius:12px;font-size:12px;display:flex;justify-content:space-between;gap:10px}
+.lpg-first .photo-label b{font-weight:500}
+.lpg-first .hero-act{display:block}
+.lpg-first .hero-price{display:flex;align-items:center;gap:16px;margin:0 0 14px}
+.lpg-first .hero-price strong{font:400 44px/1 var(--serif);letter-spacing:-.04em;color:var(--wine);white-space:nowrap}
+.lpg-first .hero-price span{font-size:13px;line-height:1.5;max-width:180px}
+.lpg-first .hero-cta{max-width:none;margin:0}
+.lpg-first .offer-note{font-size:12px;color:var(--ink-2);margin:12px 0 0}
+.lpg-first .warn-line{font-size:11px;margin:12px 0 0}
+.lpg-page .evidence{padding:22px 0;border-top:1px solid var(--line);border-bottom:1px solid var(--line)}
+.evidence .wrap{display:grid;grid-template-columns:1fr 1fr;gap:18px}
+.evidence a{text-decoration:none;color:var(--ink)}
+.evidence strong{display:block;font:400 27px/1.2 var(--serif);color:var(--wine)}
+.evidence span{font-size:12px;color:var(--ink-2);display:block;margin-top:5px}
+.evidence .evidence-last{grid-column:1/-1;border-top:1px solid var(--line);padding-top:15px}
+.lpg-page .first-visit{background:var(--plum);color:var(--paper)}
+.first-visit h2{color:var(--paper);max-width:14em}
+.first-visit .eyebrow{color:#ecc0c7}
+.first-visit .reason-grid{display:grid;gap:26px;margin-top:32px}
+.reason{border-top:1px solid #76565e;padding-top:18px}
+.reason .num{color:#e2a7b2;font-size:12px;letter-spacing:.12em}
+.reason h3{color:var(--paper);font-size:25px;margin:10px 0}
+.reason p{font-size:15px;color:#ead8db;margin:0;max-width:30em}
+.lpg-page .guest-proof{padding:40px 0;background:var(--blush)}
+.guest-proof .wrap{max-width:900px}
+.guest-proof blockquote{font:400 clamp(22px,4.5vw,32px)/1.45 var(--serif);margin:0 0 18px}
+.guest-proof p{font-size:13px;color:var(--ink-2);margin:0}
+.guest-proof a{display:inline-block;font-size:13px;margin-top:16px}
+.lpg-page .kind .arch{border-radius:24px;aspect-ratio:4/3}
+.lpg-page .kinds{gap:26px}
+.lpg-page .kind{padding-bottom:24px;border-bottom:1px solid var(--line)}
+.lpg-page .kind h3{font-size:28px}
+.lpg-page .kind .tag{font-size:18px}
+.lpg-page .kind .btn{margin-top:18px;min-height:48px;font-size:14px}
+.lpg-page .booking-panel{background:var(--wine);color:var(--paper);scroll-margin-top:70px}
+.booking-panel .wrap{display:grid;gap:28px;align-items:start}
+.booking-panel h2{color:var(--paper);font-size:clamp(34px,5vw,48px);max-width:11em}
+.booking-panel .eyebrow{color:#ecc0c7}
+.booking-panel .booking-lead{font-size:17px;max-width:30em;color:#f4dee2}
+.booking-panel .booking-steps{list-style:none;margin:24px 0 0;padding:0;display:grid;gap:14px}
+.booking-steps li{font-size:14px;padding-top:14px;border-top:1px solid #b96272;color:#f4dee2}
+.booking-steps b{font-weight:500;color:white;display:block;font-size:16px}
+.booking-panel .form-card{padding:26px 22px;box-shadow:0 18px 50px #4b0e2533}
+.booking-panel .form-card h3{font-size:26px}
+.booking-panel .choice span{font-size:13px;padding:10px 12px}
+.lpg-page .book{background:var(--blush);color:var(--ink)}
+.lpg-page .book h2,.lpg-page .book .offer b,.lpg-page .book .offer .p{color:var(--ink)}
+.lpg-page .book .sec-head p,.lpg-page .book .offer span,.lpg-page .book .rules{color:var(--ink-2)}
+.lpg-page .book .offer{background:var(--paper);border-color:var(--line)}
+.lpg-page .book .rules a{color:var(--wine)}
+.lpg-page .book .offer .p s{color:var(--ink-2)}
+.lpg-page .book .btn-light{background:var(--wine);color:#fff}
+.lpg-page .trust .photo{aspect-ratio:5/4;border-radius:22px 22px 100px 22px}
+.lpg-page .trust .points b{font-size:23px}
+.lpg-page .trust .points span{font-size:15px}
+.lpg-page .mosaic figure.arch{border-radius:24px}
 @media(min-width:760px){
-.lpg-first .wrap{grid-template-columns:1.1fr .9fr;grid-template-areas:"copy media" "act media";align-items:start;column-gap:48px;row-gap:20px}
-.lpg-first .hero-media{position:sticky;top:90px}
-.lpg-first .hero-media .arch{aspect-ratio:4/5}
-.lpg-first .form-card{max-width:520px}
+.lpg-page section{padding:80px 0}
+.lpg-page .lpg-first{padding-top:38px}
+.lpg-first .wrap{grid-template-columns:1fr 1fr;grid-template-areas:"copy media" "act media";column-gap:64px;row-gap:24px;align-items:center;padding-bottom:48px}
+.lpg-first .hero-copy{align-self:end}
+.lpg-first .hero-act{align-self:start}
+.lpg-first .hero-media{align-self:stretch;min-height:580px}
+.lpg-first .hero-media .arch{aspect-ratio:auto;height:100%;border-radius:240px 240px 24px 24px}
+.lpg-first .photo-label{bottom:24px;left:24px;right:24px;padding:14px 18px;font-size:13px}
+.lpg-first .hero-price strong{font-size:58px}
+.lpg-first .hero-cta{max-width:390px}
+.evidence .wrap{grid-template-columns:1fr 1fr 1fr;gap:36px}
+.evidence .evidence-last{grid-column:auto;border-top:0;padding-top:0}
+.lpg-page .evidence{padding:30px 0}
+.first-visit .reason-grid{grid-template-columns:repeat(3,1fr);gap:32px;margin-top:44px}
+.booking-panel .wrap{grid-template-columns:1fr 1fr;gap:64px}
+.lpg-page .kinds{grid-template-columns:1fr 1fr}
+.lpg-page .book .offers{grid-template-columns:1fr 1fr}
 }
+@media(max-width:380px){.lpg-first h1{font-size:35px}.lpg-first .hero-price strong{font-size:39px}.lpg-first .hero-price{gap:12px}.lpg-first .photo-label{font-size:11px}}
+@media(prefers-reduced-motion:reduce){html{scroll-behavior:auto}}
 </style>"""
     h = h.replace('</head>', hero_style + '</head>')
     body = f"""
-<main>
-<section class="hero lpg-first" data-landing-version="lpg-hero-20261113"><div class="wrap">
+<main class="lpg-page">
+<section class="hero lpg-first" data-landing-version="lpg-visual-20261113"><div class="wrap">
   <div class="hero-copy">
-    <p class="eyebrow">Velvet Laser · Сыктывкар · {S['address']}</p>
-    <h1>LPG-массаж тела, 40 минут</h1>
-    <p class="lead">Интенсивность подбирает мастер. Начните с одного визита — без покупки абонемента.</p>
-    <p class="hero-offer">{rub(o['price'] + o['suit_price'])} с новым костюмом</p>
-    <p class="offer-note">Процедура {rub(o['price'])} + костюм {rub(o['suit_price'])}. Первый визит до {P['until']}.</p>
-    <div class="hero-cta"><a class="btn" href="#zapis">Записаться на первый визит</a></div>
-  </div>
-  <div class="hero-act" id="zapis">
-    {quick_form}
-    <a class="trust-link" href="{S['yandex_reviews_url']}" target="_blank" rel="noopener">{S['yandex_rating']} на Яндекс Картах · {S['yandex_reviews_count']}</a>
-    <p class="warn-line">{L['warning']}</p>
+    <p class="eyebrow">Velvet Laser / Сыктывкар · {S['address']}</p>
+    <h1>LPG-массаж.<br><em>40 минут для себя.</em></h1>
+    <p class="lead">Плотный аппаратный массаж тела в спокойной студии. Мастер подберёт интенсивность и будет спрашивать, комфортно ли вам.</p>
   </div>
   <div class="hero-media">
     <div class="arch">{img('l-hero', 'Мастер проводит LPG-массаж в студии Velvet Laser', big=True, eager=True)}</div>
-    <p class="photo-note">Так проходит процедура в нашей студии. Интенсивность можно менять во время массажа.</p>
+    <div class="photo-label"><b>Так проходит LPG у нас</b><span>Настоящее фото студии</span></div>
+  </div>
+  <div class="hero-act">
+    <p class="hero-price"><strong>{rub(o['price'] + o['suit_price'])}</strong><span>первый LPG, 40 минут<br>новый костюм включён</span></p>
+    <div class="hero-cta"><a class="btn" href="#zapis">Записаться на первый визит</a></div>
+    <p class="offer-note">Процедура {rub(o['price'])} + личный костюм {rub(o['suit_price'])}.<br>Для первого посещения до {P['until']}.</p>
+    <p class="warn-line">{L['warning']}</p>
   </div>
 </div></section>
-
-<section class="feel"><div class="wrap">
-  <h2>Знакомо?</h2>
-  <div>
-    <ul>
-      <li>Целый день за столом или за рулём, а вечером тело будто чужое.</li>
-      <li>Хочется позаботиться о себе, но на спортзал нет ни сил, ни времени.</li>
-      <li>Давно хотели попробовать LPG, но непонятно, с чего начать и сколько это стоит.</li>
-    </ul>
-    <p>Первый LPG с новым костюмом — {rub(o['price'] + o['suit_price'])}, вакуум — {rub(o['vacuum_price'])}. Попробуйте один визит, а дальше решите сами.</p>
+<section class="evidence" aria-label="О студии"><div class="wrap">
+  <a href="{S['yandex_reviews_url']}" target="_blank" rel="noopener"><strong>{S['yandex_rating']} / 5</strong><span>{S['yandex_reviews_count']} на Яндекс Картах ↗</span></a>
+  <div><strong>С 2023 года</strong><span>Принимаем гостей в центре Сыктывкара</span></div>
+  <div class="evidence-last"><strong>Один визит</strong><span>Можно начать без покупки абонемента</span></div>
+</div></section>
+<section class="guest-proof"><div class="wrap">
+  <p class="eyebrow">Гости — о первом посещении</p>
+  <blockquote>«Интенсивность можно менять, мастер всё время интересовалась, комфортно ли мне. Уже записалась на следующий сеанс.»</blockquote>
+  <p>Катерина М. · март 2025 · фрагмент отзыва на Яндекс Картах</p>
+  <a href="{S['yandex_reviews_url']}" target="_blank" rel="noopener">Прочитать отзывы о студии ↗</a>
+</div></section>
+<section class="first-visit"><div class="wrap">
+  <p class="eyebrow">Первое посещение — всё понятно заранее</p>
+  <h2>Попробуйте один раз.<br>А дальше решите сами.</h2>
+  <div class="reason-grid">
+    <article class="reason"><span class="num">01 / ЦЕНА</span><h3>Костюм уже в стоимости</h3><p>Первый LPG-визит — {rub(o['price'] + o['suit_price'])}. Новый костюм остаётся у вас, его можно использовать на следующих процедурах.</p></article>
+    <article class="reason"><span class="num">02 / ОЩУЩЕНИЯ</span><h3>Интенсивность под вас</h3><p>Скажите мастеру, если хочется мягче. Перед процедурой обсудим самочувствие и противопоказания.</p></article>
+    <article class="reason"><span class="num">03 / ВЫБОР</span><h3>Без покупки курса</h3><p>Начните с одного посещения. О курсе расскажем, если спросите. Решение можно принять после знакомства со студией.</p></article>
   </div>
 </div></section>
 
@@ -416,21 +486,19 @@ def page_lpg():
   <p>LPG с новым личным костюмом — {rub(o['price'] + o['suit_price'])}. Вакуум без костюма — {rub(o['vacuum_price'])}. Выберите, что ближе.</p></div>
   <div class="kinds" style="grid-template-columns:repeat(auto-fit,minmax(260px,1fr))">
     <div class="kind"><div class="arch">{img('l-lpg', 'Руки мастера проводят LPG-массаж')}</div>
-      <h3>LPG-массаж, {o['duration']}</h3><p>Аппарат с роликами работает по телу через специальный костюм. Ощущения как от плотного массажа.</p><span class="tag">{rub(o['price'])} + личный костюм {rub(o['suit_price'])}, обычно {o['price_regular']}</span></div>
+      <h3>LPG-массаж, {o['duration']}</h3><p>Аппарат с роликами работает по телу через специальный костюм. Ощущения как от плотного массажа.</p><span class="tag">{rub(o['price'] + o['suit_price'])} с новым костюмом</span><br><a class="btn btn-line" href="#zapis">Хочу попробовать LPG</a></div>
     <div class="kind"><div class="arch">{img('l-device', 'Аппарат для массажа тела в кабинете студии')}</div>
-      <h3>Вакуумный массаж всего тела</h3><p>Аппаратный массаж без костюма. Подойдёт, если хотите попробовать, ничего не покупая заранее.</p><span class="tag">{rub(o['vacuum_price'])}, обычно {o['vacuum_regular']}</span></div>
+      <h3>Вакуумный массаж всего тела</h3><p>Аппаратный массаж без костюма. Подойдёт, если хотите попробовать, ничего не покупая заранее.</p><span class="tag">{rub(o['vacuum_price'])} · костюм не нужен</span><br><a class="btn btn-line" href="#zapis">Выбрать вакуумный массаж</a></div>
   </div>
   <p class="kinds-note">Костюм для LPG личный: он остаётся у вас и пригодится, если решите продолжить.</p>
 </div></section>
 
-{visit_block('reception', 'Стойка администратора в студии', [
-    ('Звонок', f"Администратор перезванивает в течение {S['callback_minutes']} минут и подбирает удобное время."),
-    ('Знакомство', 'Мастер спрашивает о самочувствии и помогает с костюмом, если вы выбрали LPG.'),
-    ('Массаж', f"{o['duration'].capitalize()} — вы лежите, интенсивность подбираем под вас."),
-    ('Чай', 'После — чай или кофе в зоне отдыха. Торопиться не нужно.'),
-])}
-
-{studio_block([('tea', 'Кофе и чай в зоне отдыха', 'arch tall'), ('room', 'Кабинет студии', ''), ('decor', 'Детали интерьера студии', ''), ('outside', 'Вход в студию Velvet Laser', 'wide')])}
+<section class="booking-panel" id="zapis"><div class="wrap">
+  <div><p class="eyebrow">Первый шаг — выбрать время</p><h2>Начнём с одного визита?</h2>
+  <p class="booking-lead">Оставьте номер. Администратор перезвонит в течение {S['callback_minutes']} минут с 9:00 до 21:00 и предложит свободное время.</p>
+  <ul class="booking-steps"><li><b>LPG — {rub(o['price'] + o['suit_price'])}</b>40 минут, новый личный костюм включён.</li><li><b>Вакуум — {rub(o['vacuum_price'])}</b>Массаж тела без костюма.</li><li><b>{S['address']}</b>Центр Сыктывкара · ежедневно 9:00–21:00.</li></ul></div>
+  {quick_form}
+</div></section>
 
 {trust_block()}
 
@@ -439,13 +507,15 @@ def page_lpg():
 {booking_details}
 
 {faq_contra('<b>LPG-массаж</b> не проводится при заболеваниях крови и склонности к тромбообразованию, туберкулёзе, опухолях, индивидуальной непереносимости массажа, нарушениях психики. Процедуру откладываем при лихорадке, острых заболеваниях и инфекциях, интоксикации, заболеваниях кожи, кровотечениях, во время беременности и менструации.<br><br><b>Вакуумный массаж</b> — противопоказания администратор уточнит при записи.', [
-    ("Это больно?", "Нет. Ощущения как от плотного массажа. Мастер спрашивает, комфортно ли вам, и меняет интенсивность."),
+    ("Какие ощущения во время LPG?", "Ощущения похожи на плотный массаж. Чувствительность у всех разная. Если вам неприятно, скажите мастеру — интенсивность можно уменьшить."),
     ("Зачем костюм?", f"LPG-массаж проводится через специальный костюм. Он личный, стоит {rub(o['suit_price'])} и остаётся у вас. Не хотите покупать костюм — выберите вакуумный массаж за {rub(o['vacuum_price'])}."),
     ("LPG или вакуум?", "Обе процедуры — аппаратный массаж тела. Расскажите администратору, чего хотите, — подскажем."),
     ("Будут ли уговаривать на курс?", f"Нет. О курсе расскажем, только если спросите. Решите оформить абонемент в течение {P['trial_free_days']} дней — стоимость первого визита вычтем."),
     ("Я уже была у вас. Акция для меня?", "Цена действует для первого посещения студии. Для постоянных гостей есть абонементы и программа «для подруг»: 1 000 ₽ на баланс за каждую приглашённую."),
     ("Как перенести запись?", "Напишите или позвоните нам не позже чем за 24 часа."),
 ])}
+
+{studio_block([('tea', 'Кофе и чай в зоне отдыха', 'arch tall'), ('room', 'Кабинет студии', ''), ('decor', 'Детали интерьера студии', ''), ('outside', 'Вход в студию Velvet Laser', 'wide')])}
 
 {contacts_block()}
 
@@ -563,5 +633,3 @@ def main():
 
 if __name__ == "__main__":
     main()
-
-
