@@ -349,6 +349,7 @@ def page_lpg():
     quick_form = quick_form.replace(' и подберёт удобное время. Запись ни к чему не обязывает.', '.')
     quick_form = quick_form.replace('Выбрать процедуру и время', 'Подобрать время')
     booking_details = (booking[:form_start] + booking[form_end:]).replace('id="zapis"', 'id="ceny"').replace('class="wrap book-grid"', 'class="wrap"')
+    booking_details = booking_details.replace('</div></section>', '<p style="margin-top:24px"><a class="btn btn-light" href="#zapis">Подобрать время</a></p></div></section>')
     hero_style = """<style>
 .lpg-first .wrap{gap:20px;grid-template-areas:"copy" "act" "media"}
 .lpg-first h1{font-size:clamp(30px,7.2vw,48px);max-width:17em;margin-bottom:12px}
