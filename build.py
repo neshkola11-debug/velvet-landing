@@ -208,13 +208,7 @@ def book_block(title, sub, offers, extra_rules, options, cta):
     <h3>Оставьте номер</h3>
     <p class="sub">Администратор перезвонит в течение {S['callback_minutes']} минут с 9:00 до 21:00 и подберёт удобное время. Запись ни к чему не обязывает.</p>
     <div class="field"><span>Что выбираете</span><div class="choice">{opts}</div></div>
-    <div class="field"><label for="f-name">Как к вам обращаться</label><input id="f-name" name="name" autocomplete="given-name" required></div>
     <div class="field"><label for="f-phone">Телефон</label><input id="f-phone" name="phone" type="tel" inputmode="tel" autocomplete="tel" placeholder="+7 (___) ___-__-__" required></div>
-    <div class="field"><span>Когда удобнее прийти</span><div class="choice">
-      <label><input type="radio" name="time" value="утро"><span>Утром</span></label>
-      <label><input type="radio" name="time" value="день"><span>Днём</span></label>
-      <label><input type="radio" name="time" value="вечер"><span>Вечером</span></label>
-    </div></div>
     <div class="hp" aria-hidden="true"><label>Сайт<input name="website" tabindex="-1" autocomplete="off"></label></div>
     <label class="agree"><input type="checkbox" name="agree" value="1" aria-label="Согласие на обработку персональных данных"><span>Даю <a href="/soglasie/" target="_blank">согласие на обработку персональных данных</a> и подтверждаю, что ознакомлен(а) с <a href="/politika/" target="_blank">политикой</a>.</span></label>
     <button class="btn btn-block" type="submit" data-label="{cta}">{cta}</button>
@@ -329,7 +323,7 @@ def page_face():
 
 {contacts_block()}
 
-{cross_block(f"Для тела — LPG-массаж от {rub(O['lpg']['price'])}", f"40 минут аппаратного массажа, после которых телу легче. Тоже для первого визита, до {P['until']}.", f"/{O['lpg']['slug']}/", 'l-hero', 'LPG-массаж в студии')}
+{cross_block(f"Для тела — LPG с костюмом за {rub(O['lpg']['price'] + O['lpg']['suit_price'])}", f"40 минут аппаратного массажа, после которых телу легче. Тоже для первого визита, до {P['until']}.", f"/{O['lpg']['slug']}/", 'l-hero', 'LPG-массаж в студии')}
 </main>
 """
     return h + body + footer(f"Записаться за {rub(o['price'])}")
@@ -338,15 +332,15 @@ def page_face():
 # ---------- LPG ----------
 def page_lpg():
     o = O["lpg"]
-    h = head("LPG-массаж от 890 ₽ в Сыктывкаре — Velvet Laser",
-             f"LPG-массаж 40 минут за 890 ₽ или вакуумный массаж всего тела для первого посещения, до {P['until']}. Студия в центре Сыктывкара, {S['address']}.",
+    h = head("LPG с костюмом за 1 190 ₽ в Сыктывкаре — Velvet Laser",
+             f"LPG-массаж 40 минут и новый личный костюм за 1 190 ₽ или вакуумный массаж за 890 ₽ для первого посещения, до {P['until']}. Студия в центре Сыктывкара, {S['address']}.",
              "/lpg/")
     body = f"""
 <main>
 <section class="hero"><div class="wrap">
   <div class="hero-media">
     <div class="arch">{img('l-hero', 'Мастер проводит LPG-массаж ног в белом костюме', big=True, eager=True)}</div>
-    {ticket('Приглашение на первый визит', f"LPG-массаж, {o['duration']}", '890<small>₽</small>', f"обычно <s>{o['price_regular']}</s> · костюм {rub(o['suit_price'])}", f"до {P['until']}", 'Вакуум — тоже 890 ₽')}
+    {ticket('Приглашение на первый визит', f"LPG-массаж, {o['duration']}", '1 190<small>₽</small>', f"{rub(o['price'])} за процедуру + {rub(o['suit_price'])} за костюм", f"до {P['until']}", 'Вакуум без костюма — 890 ₽')}
   </div>
   <div class="hero-copy">
     <h1>Сорок минут, после которых телу легче</h1>
@@ -354,7 +348,7 @@ def page_lpg():
   </div>
   <div class="hero-act">
     <div class="hero-cta">
-      <a class="btn" href="#zapis">Записаться за {rub(o['price'])}</a>
+      <a class="btn" href="#zapis">Выбрать процедуру и время</a>
       <p class="hero-note">Перезвоним за {S['callback_minutes']} минут и подберём время. Запись ни к чему не обязывает.</p>
     </div>
     {facts()}
@@ -370,13 +364,13 @@ def page_lpg():
       <li>Хочется позаботиться о себе, но на спортзал нет ни сил, ни времени.</li>
       <li>Давно хотели попробовать LPG, но непонятно, с чего начать и сколько это стоит.</li>
     </ul>
-    <p>Начните с одного визита за {rub(o['price'])}. Почувствуете, как это, — а дальше решите сами.</p>
+    <p>Первый LPG с новым костюмом — {rub(o['price'] + o['suit_price'])}, вакуум — {rub(o['vacuum_price'])}. Попробуйте один визит, а дальше решите сами.</p>
   </div>
 </div></section>
 
 <section><div class="wrap">
-  <div class="sec-head"><h2>Два варианта — одна цена</h2>
-  <p>Оба для первого визита стоят {rub(o['price'])}. Выберите, что ближе, или спросите администратора.</p></div>
+  <div class="sec-head"><h2>Два варианта первого визита</h2>
+  <p>LPG с новым личным костюмом — {rub(o['price'] + o['suit_price'])}. Вакуум без костюма — {rub(o['vacuum_price'])}. Выберите, что ближе.</p></div>
   <div class="kinds" style="grid-template-columns:repeat(auto-fit,minmax(260px,1fr))">
     <div class="kind"><div class="arch">{img('l-lpg', 'Руки мастера проводят LPG-массаж')}</div>
       <h3>LPG-массаж, {o['duration']}</h3><p>Аппарат с роликами работает по телу через специальный костюм. Ощущения как от плотного массажа.</p><span class="tag">{rub(o['price'])} + личный костюм {rub(o['suit_price'])}, обычно {o['price_regular']}</span></div>
@@ -400,15 +394,15 @@ def page_lpg():
 {reviews_block('lpg')}
 
 {book_block('Ваше приглашение', 'Выберите процедуру и оставьте номер — остальное сделаем мы.', [
-    (f"LPG-массаж, {o['duration']}", rub(o['price']), o['price_regular'], f"Плюс личный костюм {rub(o['suit_price'])} — он остаётся у вас."),
+    (f"LPG-массаж, {o['duration']}", rub(o['price'] + o['suit_price']), "", f"Включены процедура {rub(o['price'])} и новый костюм {rub(o['suit_price'])}. Костюм остаётся у вас."),
     ('Вакуумный массаж всего тела', rub(o['vacuum_price']), o['vacuum_regular'], 'Без костюма и дополнительных покупок.'),
 ], ['Акционная цена — на LPG-массаж или на вакуумный массаж всего тела, на выбор.'],
-    [('LPG — 890 + костюм 300', f"LPG — {rub(o['price'])} + костюм"), ('Вакуум всего тела — 890', f"Вакуум — {rub(o['vacuum_price'])}")],
-    f"Записаться за {rub(o['price'])}")}
+    [('LPG — 890 + костюм 300', f"LPG с новым костюмом — {rub(o['price'] + o['suit_price'])}"), ('Вакуум всего тела — 890', f"Вакуум — {rub(o['vacuum_price'])}")],
+    f"Выбрать процедуру и время")}
 
 {faq_contra('<b>LPG-массаж</b> не проводится при заболеваниях крови и склонности к тромбообразованию, туберкулёзе, опухолях, индивидуальной непереносимости массажа, нарушениях психики. Процедуру откладываем при лихорадке, острых заболеваниях и инфекциях, интоксикации, заболеваниях кожи, кровотечениях, во время беременности и менструации.<br><br><b>Вакуумный массаж</b> — противопоказания администратор уточнит при записи.', [
     ("Это больно?", "Нет. Ощущения как от плотного массажа. Мастер спрашивает, комфортно ли вам, и меняет интенсивность."),
-    ("Зачем костюм?", f"LPG-массаж проводится через специальный костюм. Он личный, стоит {rub(o['suit_price'])} и остаётся у вас. Не хотите покупать костюм — выберите вакуумный массаж по той же цене."),
+    ("Зачем костюм?", f"LPG-массаж проводится через специальный костюм. Он личный, стоит {rub(o['suit_price'])} и остаётся у вас. Не хотите покупать костюм — выберите вакуумный массаж за {rub(o['vacuum_price'])}."),
     ("LPG или вакуум?", "Обе процедуры — аппаратный массаж тела. Расскажите администратору, чего хотите, — подскажем."),
     ("Будут ли уговаривать на курс?", f"Нет. О курсе расскажем, только если спросите. Решите оформить абонемент в течение {P['trial_free_days']} дней — стоимость первого визита вычтем."),
     ("Я уже была у вас. Акция для меня?", "Цена действует для первого посещения студии. Для постоянных гостей есть абонементы и программа «для подруг»: 1 000 ₽ на баланс за каждую приглашённую."),
@@ -420,7 +414,7 @@ def page_lpg():
 {cross_block(f"Для лица — массаж за {rub(O['face']['price'])}", f"Классический, скульптурный или буккальный — на выбор. Тоже для первого визита, до {P['until']}.", f"/{O['face']['slug']}/", 'f-brush', 'Уход за лицом в студии')}
 </main>
 """
-    return h + body + footer(f"Записаться за {rub(o['price'])}")
+    return h + body + footer(f"Выбрать процедуру и время")
 
 
 # ---------- Главная ----------
@@ -433,7 +427,7 @@ def page_index():
   <p class="lead">Выберите процедуру, чтобы узнать подробности и записаться.</p></div>
   <div class="hub">
     <a href="/{O['face']['slug']}/"><img src="/assets/img/f-hero-s.webp" alt="Массаж лица" loading="lazy"><span><b>Массаж лица — {rub(O['face']['price'])}</b><span class="muted">обычно {O['face']['price_regular']}</span></span></a>
-    <a href="/{O['lpg']['slug']}/"><img src="/assets/img/l-hero-s.webp" alt="LPG-массаж" loading="lazy"><span><b>LPG-массаж — от {rub(O['lpg']['price'])}</b><span class="muted">обычно {O['lpg']['price_regular']}</span></span></a>
+    <a href="/{O['lpg']['slug']}/"><img src="/assets/img/l-hero-s.webp" alt="LPG-массаж" loading="lazy"><span><b>LPG с костюмом — {rub(O['lpg']['price'] + O['lpg']['suit_price'])}</b><span class="muted">обычно {O['lpg']['price_regular']}</span></span></a>
   </div>
   <p class="warn-line">{L['warning']}</p>
 </div></section>
@@ -531,3 +525,4 @@ def main():
 
 if __name__ == "__main__":
     main()
+
