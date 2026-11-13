@@ -67,14 +67,14 @@
       msg.className = 'form-msg';
       var data = new FormData(f);
       var digits = (data.get('phone') || '').replace(/\D/g, '');
-      if (!data.get('name') || digits.length !== 11) {
-        msg.className = 'form-msg err'; msg.textContent = 'Проверьте имя и номер телефона — в номере должно быть 11 цифр.'; return;
+      if (digits.length !== 11 || digits[0] !== '7') {
+        msg.className = 'form-msg err'; msg.textContent = 'Проверьте номер телефона — он должен начинаться с +7 и содержать 11 цифр.'; return;
       }
       if (!data.get('agree')) {
         msg.className = 'form-msg err'; msg.textContent = 'Отметьте согласие на обработку персональных данных — без него мы не можем принять заявку.'; return;
       }
       var payload = {
-        name: data.get('name'), phone: '+' + digits, time: data.get('time') || '',
+        name: (data.get('name') || '').trim() || 'Имя не указано', phone: '+' + digits, time: data.get('time') || '',
         offer: data.get('offer') || '', page: location.pathname, sent_at: new Date().toISOString(),
         website: data.get('website') || ''
       };
@@ -119,3 +119,4 @@
     });
   }
 })();
+
