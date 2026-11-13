@@ -86,9 +86,15 @@
         return;
       }
       btn.disabled = true; btn.textContent = 'Отправляем…';
-      // text/plain + no-cors: обработчик Google Apps Script не отвечает на предварительные CORS-запросы
-      fetch(C.endpoint, { method: 'POST', mode: 'no-cors', headers: { 'Content-Type': 'text/plain;charset=utf-8' }, body: JSON.stringify(payload) })
-        .then(function (r) { if (!r.ok && r.type !== 'opaque') throw new Error(r.status); })
+      // text/plain avoids a preflight; CORS lets us verify the server acknowledgement.
+      fetch(C.endpoint, { method: 'POST', mode: 'cors', credentials: 'omit', headers: { 'Content-Type': 'text/plain;charset=utf-8' }, body: JSON.stringify(payload) })
+        .then(function (r) {
+          if (!r.ok || r.type === 'opaque') throw new Error('delivery_unconfirmed');
+          return r.json();
+        })
+        .then(function (result) {
+          if (!result || result.ok !== true) throw new Error('delivery_rejected');
+        })
         .then(function () {
           goal('lead');
           f.reset();
@@ -97,7 +103,7 @@
         })
         .catch(function () {
           msg.className = 'form-msg err';
-          msg.innerHTML = 'Не получилось отправить. Позвоните нам: <a href="tel:' + C.phoneLink + '">' + C.phone + '</a> — запишем по телефону.';
+          msg.innerHTML = 'Не удалось подтвердить отправку заявки. Данные остались в форме. Позвоните нам: <a href="tel:' + C.phoneLink + '">' + C.phone + '</a> — запишем по телефону.';
         })
         .then(function () { btn.disabled = false; btn.textContent = btn.getAttribute('data-label'); });
     });
