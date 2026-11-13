@@ -335,24 +335,66 @@ def page_lpg():
     h = head("LPG с костюмом за 1 190 ₽ в Сыктывкаре — Velvet Laser",
              f"LPG-массаж 40 минут и новый личный костюм за 1 190 ₽ или вакуумный массаж за 890 ₽ для первого посещения, до {P['until']}. Студия в центре Сыктывкара, {S['address']}.",
              "/lpg/")
+    booking = book_block('Ваше приглашение', 'Выберите процедуру и оставьте номер — остальное сделаем мы.', [
+    (f"LPG-массаж, {o['duration']}", rub(o['price'] + o['suit_price']), "", f"Включены процедура {rub(o['price'])} и новый костюм {rub(o['suit_price'])}. Костюм остаётся у вас."),
+    ('Вакуумный массаж всего тела', rub(o['vacuum_price']), o['vacuum_regular'], 'Без костюма и дополнительных покупок.'),
+], ['Акционная цена — на LPG-массаж или на вакуумный массаж всего тела, на выбор.'],
+    [('LPG — 890 + костюм 300', f"LPG с новым костюмом — {rub(o['price'] + o['suit_price'])}"), ('Вакуум всего тела — 890', f"Вакуум — {rub(o['vacuum_price'])}")],
+    f"Выбрать процедуру и время")
+    form_start = booking.index('  <form')
+    form_end = booking.index('</form>', form_start) + len('</form>')
+    quick_form = booking[form_start:form_end]
+    quick_form = quick_form.replace('<h3>Оставьте номер</h3>', '<h3>Подберём время для вас</h3>')
+    quick_form = quick_form.replace('Администратор перезвонит в течение ', 'Перезвоним в течение ')
+    quick_form = quick_form.replace(' и подберёт удобное время. Запись ни к чему не обязывает.', '.')
+    quick_form = quick_form.replace('Выбрать процедуру и время', 'Подобрать время')
+    booking_details = (booking[:form_start] + booking[form_end:]).replace('id="zapis"', 'id="ceny"').replace('class="wrap book-grid"', 'class="wrap"')
+    hero_style = """<style>
+.lpg-first .wrap{gap:20px;grid-template-areas:"copy" "act" "media"}
+.lpg-first h1{font-size:clamp(30px,7.2vw,48px);max-width:17em;margin-bottom:12px}
+.lpg-first .eyebrow{font-size:13px;color:var(--wine);font-weight:500;margin:0 0 10px}
+.lpg-first .lead{font-size:16px;line-height:1.5}
+.lpg-first .hero-offer{font-size:24px;line-height:1.25;font-weight:500;color:var(--wine);margin:16px 0 4px}
+.lpg-first .offer-note{font-size:13px;color:var(--ink-2);margin:0}
+.lpg-first .hero-act{scroll-margin-top:76px}
+.lpg-first .form-card{padding:22px 20px;border:1px solid var(--line);box-shadow:0 12px 32px rgba(58,37,41,.05)}
+.lpg-first .form-card h3{font-size:22px}
+.lpg-first .form-card .sub{margin-bottom:14px;font-size:13px}
+.lpg-first .choice span{padding:9px 12px;font-size:13px}
+.lpg-first .agree{font-size:11px;line-height:1.4;margin-bottom:12px}
+.lpg-first .form-alt{margin-top:10px}
+.lpg-first .trust-link{display:inline-block;font-size:13px;margin-top:12px}
+.lpg-first .hero-media{padding:0}
+.lpg-first .hero-media .arch{aspect-ratio:4/3;border-radius:24px}
+.lpg-first .photo-note{font-size:13px;color:var(--ink-2);margin:10px 0 0}
+.lpg-first .warn-line{margin-top:10px}
+@media(min-width:760px){
+.lpg-first .wrap{grid-template-columns:1.1fr .9fr;grid-template-areas:"copy media" "act media";align-items:start;column-gap:48px;row-gap:20px}
+.lpg-first .hero-media{position:sticky;top:90px}
+.lpg-first .hero-media .arch{aspect-ratio:4/5}
+.lpg-first .form-card{max-width:520px}
+}
+</style>"""
+    h = h.replace('</head>', hero_style + '</head>')
     body = f"""
 <main>
-<section class="hero"><div class="wrap">
-  <div class="hero-media">
-    <div class="arch">{img('l-hero', 'Мастер проводит LPG-массаж ног в белом костюме', big=True, eager=True)}</div>
-    {ticket('Приглашение на первый визит', f"LPG-массаж, {o['duration']}", '1 190<small>₽</small>', f"{rub(o['price'])} за процедуру + {rub(o['suit_price'])} за костюм", f"до {P['until']}", 'Вакуум без костюма — 890 ₽')}
-  </div>
+<section class="hero lpg-first" data-landing-version="lpg-hero-20261113"><div class="wrap">
   <div class="hero-copy">
-    <h1>Сорок минут, после которых телу легче</h1>
-    <p class="lead">LPG-массаж в спокойной студии в центре Сыктывкара. Вы просто лежите, аппарат делает своё дело, а мастер следит, чтобы было комфортно.</p>
+    <p class="eyebrow">Velvet Laser · Сыктывкар · {S['address']}</p>
+    <h1>LPG-массаж тела, 40 минут</h1>
+    <p class="lead">Интенсивность подбирает мастер. Начните с одного визита — без покупки абонемента.</p>
+    <p class="hero-offer">{rub(o['price'] + o['suit_price'])} с новым костюмом</p>
+    <p class="offer-note">Процедура {rub(o['price'])} + костюм {rub(o['suit_price'])}. Первый визит до {P['until']}.</p>
+    <div class="hero-cta"><a class="btn" href="#zapis">Записаться на первый визит</a></div>
   </div>
-  <div class="hero-act">
-    <div class="hero-cta">
-      <a class="btn" href="#zapis">Выбрать процедуру и время</a>
-      <p class="hero-note">Перезвоним за {S['callback_minutes']} минут и подберём время. Запись ни к чему не обязывает.</p>
-    </div>
-    {facts()}
+  <div class="hero-act" id="zapis">
+    {quick_form}
+    <a class="trust-link" href="{S['yandex_reviews_url']}" target="_blank" rel="noopener">{S['yandex_rating']} на Яндекс Картах · {S['yandex_reviews_count']}</a>
     <p class="warn-line">{L['warning']}</p>
+  </div>
+  <div class="hero-media">
+    <div class="arch">{img('l-hero', 'Мастер проводит LPG-массаж в студии Velvet Laser', big=True, eager=True)}</div>
+    <p class="photo-note">Так проходит процедура в нашей студии. Интенсивность можно менять во время массажа.</p>
   </div>
 </div></section>
 
@@ -393,12 +435,7 @@ def page_lpg():
 
 {reviews_block('lpg')}
 
-{book_block('Ваше приглашение', 'Выберите процедуру и оставьте номер — остальное сделаем мы.', [
-    (f"LPG-массаж, {o['duration']}", rub(o['price'] + o['suit_price']), "", f"Включены процедура {rub(o['price'])} и новый костюм {rub(o['suit_price'])}. Костюм остаётся у вас."),
-    ('Вакуумный массаж всего тела', rub(o['vacuum_price']), o['vacuum_regular'], 'Без костюма и дополнительных покупок.'),
-], ['Акционная цена — на LPG-массаж или на вакуумный массаж всего тела, на выбор.'],
-    [('LPG — 890 + костюм 300', f"LPG с новым костюмом — {rub(o['price'] + o['suit_price'])}"), ('Вакуум всего тела — 890', f"Вакуум — {rub(o['vacuum_price'])}")],
-    f"Выбрать процедуру и время")}
+{booking_details}
 
 {faq_contra('<b>LPG-массаж</b> не проводится при заболеваниях крови и склонности к тромбообразованию, туберкулёзе, опухолях, индивидуальной непереносимости массажа, нарушениях психики. Процедуру откладываем при лихорадке, острых заболеваниях и инфекциях, интоксикации, заболеваниях кожи, кровотечениях, во время беременности и менструации.<br><br><b>Вакуумный массаж</b> — противопоказания администратор уточнит при записи.', [
     ("Это больно?", "Нет. Ощущения как от плотного массажа. Мастер спрашивает, комфортно ли вам, и меняет интенсивность."),
@@ -525,4 +562,5 @@ def main():
 
 if __name__ == "__main__":
     main()
+
 
