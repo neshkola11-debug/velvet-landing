@@ -294,14 +294,14 @@ def page_face():
 </style>""" + '</head>')
     body = f"""
 <main class="face-page">
-<section class="hero face-first" data-landing-version="face-20261116"><div class="wrap">
+<section class="hero face-first" data-landing-version="face-ai-20261116"><div class="wrap">
   <div class="hero-copy">
     <p class="eyebrow">Velvet Laser · Сыктывкар · {S['address']}</p>
     <h1>Массаж лица<br><em>за {rub(o['price'])}</em></h1>
     <p class="lead">Классический, скульптурный или буккальный. Выберите вместе с мастером — цена одна.</p>
   </div>
   <div class="hero-media">
-    <div class="arch">{img('f-calm', 'Мастер выполняет массаж лица в студии Velvet Laser', big=True, eager=True)}</div>
+    <div class="arch"><img src="/assets/img/face-hero-ai.jpg" srcset="/assets/img/face-hero-ai-s.jpg 560w, /assets/img/face-hero-ai.jpg 880w" sizes="(min-width:760px) 50vw, 100vw" width="880" height="1100" alt="Иллюстрация массажа лица, созданная с помощью ИИ" loading="eager" fetchpriority="high" decoding="async"></div>
   </div>
   <div class="hero-act">
     <div class="hero-cta"><a class="btn" href="#zapis">Записаться за {rub(o['price'])}</a></div>
