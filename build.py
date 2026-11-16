@@ -211,7 +211,7 @@ def book_block(title, sub, offers, extra_rules, options, cta):
     <div class="field"><label for="f-phone">Телефон</label><input id="f-phone" name="phone" type="tel" inputmode="tel" autocomplete="tel" placeholder="+7 (___) ___-__-__" required></div>
     <div class="hp" aria-hidden="true"><label>Сайт<input name="website" tabindex="-1" autocomplete="off"></label></div>
     <label class="agree"><input type="checkbox" name="agree" value="1" aria-label="Согласие на обработку персональных данных"><span>Даю <a href="/soglasie/" target="_blank">согласие на обработку персональных данных</a> и подтверждаю, что ознакомлен(а) с <a href="/politika/" target="_blank">политикой</a>.</span></label>
-    <button class="btn btn-block" type="submit" data-label="{cta}">{cta}</button>
+    <button class="btn btn-block" type="submit" data-label="Подобрать время">Подобрать время</button>
     <div class="form-msg" role="status" aria-live="polite"></div>
     <div class="form-alt">
       <a class="btn btn-line" href="tel:{S['phone_link']}">Позвонить</a>
@@ -344,6 +344,8 @@ def page_lpg():
     form_start = booking.index('  <form')
     form_end = booking.index('</form>', form_start) + len('</form>')
     quick_form = booking[form_start:form_end]
+    quick_form = quick_form.replace('name="offer" value="LPG', 'name="offer" data-book-offer="lpg" value="LPG')
+    quick_form = quick_form.replace('name="offer" value="Вакуум', 'name="offer" data-book-offer="vacuum" value="Вакуум')
     quick_form = quick_form.replace('<h3>Оставьте номер</h3>', '<h3>Подберём время для вас</h3>')
     quick_form = quick_form.replace('Администратор перезвонит в течение ', 'Перезвоним в течение ')
     quick_form = quick_form.replace(' и подберёт удобное время. Запись ни к чему не обязывает.', '.')
@@ -486,9 +488,9 @@ def page_lpg():
   <p>LPG с новым личным костюмом — {rub(o['price'] + o['suit_price'])}. Вакуум без костюма — {rub(o['vacuum_price'])}. Выберите, что ближе.</p></div>
   <div class="kinds" style="grid-template-columns:repeat(auto-fit,minmax(260px,1fr))">
     <div class="kind"><div class="arch">{img('l-lpg', 'Руки мастера проводят LPG-массаж')}</div>
-      <h3>LPG-массаж, {o['duration']}</h3><p>Аппарат с роликами работает по телу через специальный костюм. Ощущения как от плотного массажа.</p><span class="tag">{rub(o['price'] + o['suit_price'])} с новым костюмом</span><br><a class="btn btn-line" href="#zapis">Хочу попробовать LPG</a></div>
+      <h3>LPG-массаж, {o['duration']}</h3><p>Аппарат с роликами работает по телу через специальный костюм. Ощущения как от плотного массажа.</p><span class="tag">{rub(o['price'] + o['suit_price'])} с новым костюмом</span><br><a class="btn btn-line" href="#zapis" data-book-offer="lpg">Хочу попробовать LPG</a></div>
     <div class="kind"><div class="arch">{img('l-device', 'Аппарат для массажа тела в кабинете студии')}</div>
-      <h3>Вакуумный массаж всего тела</h3><p>Аппаратный массаж без костюма. Подойдёт, если хотите попробовать, ничего не покупая заранее.</p><span class="tag">{rub(o['vacuum_price'])} · костюм не нужен</span><br><a class="btn btn-line" href="#zapis">Выбрать вакуумный массаж</a></div>
+      <h3>Вакуумный массаж всего тела</h3><p>Аппаратный массаж без костюма. Подойдёт, если хотите попробовать, ничего не покупая заранее.</p><span class="tag">{rub(o['vacuum_price'])} · костюм не нужен</span><br><a class="btn btn-line" href="#zapis" data-book-offer="vacuum">Выбрать вакуумный массаж</a></div>
   </div>
   <p class="kinds-note">Костюм для LPG личный: он остаётся у вас и пригодится, если решите продолжить.</p>
 </div></section>
