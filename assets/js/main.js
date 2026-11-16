@@ -46,7 +46,7 @@
           if (option) option.checked = true;
         }
         targetForm.style.scrollMarginTop = '82px';
-        targetForm.scrollIntoView({ behavior: 'auto', block: 'start' });
+        targetForm.scrollIntoView({ behavior: 'instant', block: 'start' });
       }
     }
   });
