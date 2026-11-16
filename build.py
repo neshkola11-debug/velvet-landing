@@ -244,37 +244,76 @@ def page_face():
     h = head("Массаж лица за 1 290 ₽ в Сыктывкаре — Velvet Laser",
              f"Классический, скульптурный или буккальный массаж лица за 1 290 ₽ для первого посещения, до {P['until']}. Спокойная студия в центре Сыктывкара, {S['address']}.",
              "/massazh-lica/")
+    booking = book_block('Ваше приглашение', 'Выберите, как хотите прийти, и оставьте номер — остальное сделаем мы.', [
+    ('Массаж лица на выбор', rub(o['price']), o['price_regular'], 'Классический, скульптурный или буккальный.'),
+    ('Вдвоём с подругой', rub(o['pair_price']), rub(o['price'] * 2), 'Два массажа лица, если вы обе впервые в студии.'),
+], ['«Вдвоём с подругой» — для двух гостей, которые приходят в студию впервые.'],
+    [('Массаж лица — 1290', f"Массаж лица — {rub(o['price'])}"), ('Вдвоём с подругой — 2290', f"Вдвоём с подругой — {rub(o['pair_price'])}")],
+    f"Записаться за {rub(o['price'])}")
+    h = h.replace('</head>', """<style>
+.face-page section{padding:64px 0}
+.face-page .face-first{padding:24px 0 32px}
+.face-first .wrap{display:grid;grid-template-areas:"copy" "media" "act";gap:18px}
+.face-first .eyebrow{font:500 11px/1.5 var(--sans);letter-spacing:.1em;text-transform:uppercase;color:var(--wine);margin:0 0 12px}
+.face-first h1{font-size:clamp(37px,9vw,64px);line-height:1.09;letter-spacing:-.025em;margin-bottom:14px;max-width:13em}
+.face-first h1 em{font-style:normal;color:var(--wine);white-space:nowrap}
+.face-first .lead{font-size:15px;line-height:1.6;max-width:33em;margin:0}
+.face-first .hero-media{padding:0}
+.face-first .hero-media .arch{aspect-ratio:1.85;border-radius:90px 90px 18px 18px}
+.face-first .hero-media img{object-position:50% 37%}
+.face-first .hero-act{display:block}
+.face-first .hero-cta{margin:0;max-width:420px}
+.face-first .hero-note{font-size:12px;line-height:1.5;margin:10px 0 0}
+.face-first .first-terms{font-size:12px;color:var(--ink-2);margin:12px 0 0}
+.face-first .message-link{font-size:14px;display:inline-block;margin-top:14px;text-underline-offset:4px}
+.face-first .warn-line{font-size:11px;line-height:1.5;margin-top:12px}
+.face-page .face-proof{padding:24px 0;background:var(--blush)}
+.face-proof .wrap{display:grid;gap:18px}
+.face-proof a{text-decoration:none;color:var(--ink)}
+.face-proof strong{display:block;color:var(--wine);font:400 26px/1.2 var(--serif)}
+.face-proof span{font-size:13px;display:block;margin-top:5px}
+.face-proof blockquote{font:400 19px/1.45 var(--serif);margin:0;padding-left:18px;border-left:2px solid var(--wine)}
+.face-proof cite{display:block;font:400 12px/1.5 var(--sans);margin-top:8px;color:var(--ink-2)}
+.face-page .kind .arch{aspect-ratio:4/3;border-radius:20px}
+.face-page .kind h3{font-size:26px}
+.face-page .kinds-note{margin-bottom:0}
+.face-page .book .form-card{scroll-margin-top:82px}
+@media(min-width:760px){
+.face-page .face-first{padding:38px 0 48px}
+.face-first .wrap{grid-template-columns:1fr 1fr;grid-template-areas:"copy media" "act media";gap:24px 56px;align-items:center}
+.face-first .hero-copy{align-self:end}
+.face-first .hero-act{align-self:start}
+.face-first .hero-media{align-self:stretch;min-height:500px}
+.face-first .hero-media .arch{aspect-ratio:auto;height:100%;border-radius:230px 230px 24px 24px}
+.face-first .hero-media img{object-position:50% 30%}
+.face-first .lead{font-size:17px}
+.face-proof .wrap{grid-template-columns:.85fr 1.15fr;align-items:center;gap:48px}
+.face-page section{padding:72px 0}
+}
+@media(max-width:360px){.face-first h1{font-size:35px}.face-first .eyebrow{font-size:10px}.face-first .hero-media .arch{aspect-ratio:2.1}}
+</style>""" + '</head>')
     body = f"""
-<main>
-<section class="hero"><div class="wrap">
-  <div class="hero-media">
-    <div class="arch pos-low">{img('f-hero', 'Гостья отдыхает с закрытыми глазами во время ухода за лицом', big=True, eager=True)}</div>
-    {ticket('Приглашение на первый визит', 'Массаж лица на выбор', '1 290<small>₽</small>', f"обычно <s>{o['price_regular']}</s>", f"до {P['until']}", 'Вдвоём — 2 290 ₽')}
-  </div>
+<main class="face-page">
+<section class="hero face-first" data-landing-version="face-20261116"><div class="wrap">
   <div class="hero-copy">
-    <h1>Вы заботитесь обо&nbsp;всех. Этот час&nbsp;— о&nbsp;вас</h1>
-    <p class="lead">Массаж лица в тихом кабинете в центре Сыктывкара. Тёплые руки мастера, мягкий свет и чай после — можно наконец выдохнуть.</p>
+    <p class="eyebrow">Velvet Laser · Сыктывкар · {S['address']}</p>
+    <h1>Массаж лица<br><em>за {rub(o['price'])}</em></h1>
+    <p class="lead">Классический, скульптурный или буккальный. Выберите вместе с мастером — цена одна.</p>
+  </div>
+  <div class="hero-media">
+    <div class="arch">{img('f-calm', 'Мастер выполняет массаж лица в студии Velvet Laser', big=True, eager=True)}</div>
   </div>
   <div class="hero-act">
-    <div class="hero-cta">
-      <a class="btn" href="#zapis">Записаться за {rub(o['price'])}</a>
-      <p class="hero-note">Перезвоним за {S['callback_minutes']} минут и подберём время. Запись ни к чему не обязывает.</p>
-    </div>
-    {facts()}
+    <div class="hero-cta"><a class="btn" href="#zapis">Записаться за {rub(o['price'])}</a></div>
+    <p class="hero-note">Администратор подберёт время. Перезвоним в течение {S['callback_minutes']} минут с 9:00 до 21:00.</p>
+    <p class="first-terms">Для первого посещения до {P['until']}.<br>Вдвоём с подругой — {rub(o['pair_price'])} за два массажа.</p>
+    <a class="message-link" href="{S['vk_write']}" target="_blank" rel="noopener">Удобнее переписка? Напишите в ВК ↗</a>
     <p class="warn-line">{L['warning']}</p>
   </div>
 </div></section>
-
-<section class="feel"><div class="wrap">
-  <h2>Знакомо?</h2>
-  <div>
-    <ul>
-      <li>Весь день работа, дети, дом, а на себя остаётся пять минут перед сном.</li>
-      <li>Хочется, чтобы кто-то просто позаботился о вас — без советов и уговоров.</li>
-      <li>Давно собирались на массаж, но всё время что-то важнее.</li>
-    </ul>
-    <p>Для этого и есть наш час. Вы ложитесь, закрываете глаза, а дальше о вас заботимся мы.</p>
-  </div>
+<section class="face-proof"><div class="wrap">
+  <a href="{S['yandex_reviews_url']}" target="_blank" rel="noopener"><strong>{S['yandex_rating']} / 5 на Яндекс Картах</strong><span>{S['yandex_reviews_count']} · работаем с 2023 года ↗</span></a>
+  <blockquote>«Получила удовольствие, рекомендации по уходу и записалась снова.»<cite>Светлана Г. · март 2026 · фрагмент отзыва на Яндекс Картах</cite></blockquote>
 </div></section>
 
 <section><div class="wrap">
@@ -291,6 +330,8 @@ def page_face():
   <p class="kinds-note">Не знаете, что выбрать? Мастер подскажет — цена от этого не изменится.</p>
 </div></section>
 
+{booking}
+
 {visit_block('f-care', 'Мастер наносит средство кистью, гостья отдыхает с закрытыми глазами', [
     ('Звонок', f"Администратор перезванивает в течение {S['callback_minutes']} минут и подбирает удобное время."),
     ('Знакомство', 'Мастер спрашивает о самочувствии и о том, чего вам хочется от процедуры.'),
@@ -304,12 +345,7 @@ def page_face():
 
 {reviews_block('face')}
 
-{book_block('Ваше приглашение', 'Выберите, как хотите прийти, и оставьте номер — остальное сделаем мы.', [
-    ('Массаж лица на выбор', rub(o['price']), o['price_regular'], 'Классический, скульптурный или буккальный.'),
-    ('Вдвоём с подругой', rub(o['pair_price']), rub(o['price'] * 2), 'Два массажа лица, если вы обе впервые в студии.'),
-], ['«Вдвоём с подругой» — для двух гостей, которые приходят в студию впервые.'],
-    [('Массаж лица — 1290', f"Массаж лица — {rub(o['price'])}"), ('Вдвоём с подругой — 2290', f"Вдвоём с подругой — {rub(o['pair_price'])}")],
-    f"Записаться за {rub(o['price'])}")}
+
 
 {faq_contra('Массаж лица не проводится при беременности и лактации, онкологических заболеваниях, острых инфекционных заболеваниях, кожных заболеваниях в зоне массажа, эпилепсии, кардиостимуляторе.', [
     ("Это больно?", "Нет. Ощущения как от плотного массажа. Мастер спрашивает, комфортно ли вам, и меняет интенсивность."),
