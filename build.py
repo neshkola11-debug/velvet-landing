@@ -56,7 +56,7 @@ def head(title, desc, path):
 <link rel="apple-touch-icon" href="/apple-touch-icon.png">
 <link rel="preload" href="/assets/fonts/lora-cyrillic-400-normal.woff2" as="font" type="font/woff2" crossorigin>
 <link rel="preload" href="/assets/fonts/golos-text-cyrillic-400-normal.woff2" as="font" type="font/woff2" crossorigin>
-<link rel="stylesheet" href="/assets/css/style.css">
+<link rel="stylesheet" href="/assets/css/style.css?v=20261117">
 <script>window.VL={cfg};</script>
 {metrika}{vk}
 </head>
@@ -207,6 +207,7 @@ def book_block(title, sub, offers, extra_rules, options, cta):
   <form class="form-card lead-form" novalidate>
     <h3>Оставьте номер</h3>
     <p class="sub">Администратор перезвонит в течение {S['callback_minutes']} минут с 9:00 до 21:00 и подберёт удобное время. Запись ни к чему не обязывает.</p>
+    <a class="form-proof" href="{S['yandex_reviews_url']}" target="_blank" rel="noopener" data-goal="maps"><b>{S['yandex_rating']} / 5 на Яндекс Картах</b><span>{S['yandex_reviews_count']} · прочитать ↗</span></a>
     <div class="field"><span>Что выбираете</span><div class="choice">{opts}</div></div>
     <div class="field"><label for="f-phone">Телефон</label><input id="f-phone" name="phone" type="tel" inputmode="tel" autocomplete="tel" placeholder="+7 (___) ___-__-__" required></div>
     <div class="hp" aria-hidden="true"><label>Сайт<input name="website" tabindex="-1" autocomplete="off"></label></div>
@@ -241,6 +242,7 @@ def cross_block(title, text, href, photo, alt):
 # ---------- Массаж лица ----------
 def page_face():
     o = O["face"]
+    duration = o.get('duration') or 'от 40 минут до 2 часов'
     h = head("Массаж лица за 1 290 ₽ в Сыктывкаре — Velvet Laser",
              f"Классический, скульптурный или буккальный массаж лица за 1 290 ₽ для первого посещения, до {P['until']}. Спокойная студия в центре Сыктывкара, {S['address']}.",
              "/massazh-lica/")
@@ -294,11 +296,12 @@ def page_face():
 </style>""" + '</head>')
     body = f"""
 <main class="face-page">
-<section class="hero face-first" data-landing-version="face-ai-20261116"><div class="wrap">
+<section class="hero face-first" data-landing-version="face-trust-20261117"><div class="wrap">
   <div class="hero-copy">
     <p class="eyebrow">Velvet Laser · Сыктывкар · {S['address']}</p>
     <h1>Массаж лица<br><em>за {rub(o['price'])}</em></h1>
     <p class="lead">Классический, скульптурный или буккальный. Выберите вместе с мастером — цена одна.</p>
+    <p class="face-duration">Сеанс — {duration}. Длительность уточним при записи.</p>
   </div>
   <div class="hero-media">
     <div class="arch"><img src="/assets/img/face-hero-ai.jpg" srcset="/assets/img/face-hero-ai-s.jpg 560w, /assets/img/face-hero-ai.jpg 880w" sizes="(min-width:760px) 50vw, 100vw" width="880" height="1100" alt="Иллюстрация массажа лица, созданная с помощью ИИ" loading="eager" fetchpriority="high" decoding="async"></div>
@@ -328,6 +331,15 @@ def page_face():
       <h3>Буккальный</h3><p>Мастер работает в том числе с внутренней стороны щёк — в перчатках, бережно и с вашего согласия.</p><span class="tag">обычно 2 790 ₽</span></div>
   </div>
   <p class="kinds-note">Не знаете, что выбрать? Мастер подскажет — цена от этого не изменится.</p>
+</div></section>
+
+<section class="face-team-proof"><div class="wrap">
+  <figure>{img('team', 'Команда мастеров Velvet Laser', big=True)}<figcaption>Мастера студии Velvet Laser</figcaption></figure>
+  <div><p class="eyebrow">Познакомимся до визита</p><h2>Массаж проводят все мастера нашей студии</h2>
+  <p>Сеанс длится {duration}. При записи уточним вид массажа, продолжительность и удобное для вас время.</p>
+  <p>Перед процедурой обсудим самочувствие и ваши пожелания. Во время массажа можно попросить мастера работать мягче.</p>
+  <blockquote>«Получила удовольствие, рекомендации по уходу и записалась снова.»<cite>Светлана Г. · март 2026 · <a href="{S['yandex_reviews_url']}" target="_blank" rel="noopener">отзыв на Яндекс Картах ↗</a></cite></blockquote>
+  </div>
 </div></section>
 
 {booking}
@@ -563,6 +575,62 @@ def page_lpg():
     return h + body + footer(f"Выбрать процедуру и время")
 
 
+# ---------- Вакуумный массаж: отдельная страница для объявления за 890 ₽ ----------
+def page_vacuum():
+    o = O['lpg']
+    price = rub(o['vacuum_price'])
+    h = head(f"Вакуумный массаж тела за 890 ₽ в Сыктывкаре — Velvet Laser",
+             f"Вакуумный массаж всего тела за 890 ₽ для первого посещения, до {P['until']}. Без костюма и дополнительных покупок. {S['address']}, Сыктывкар.",
+             '/vakuumnyy-massazh/')
+    booking = book_block('Вакуумный массаж за 890 ₽',
+        'Оставьте номер — администратор уточнит детали процедуры и подберёт время.',
+        [('Вакуумный массаж всего тела', price, o['vacuum_regular'], 'Без костюма и дополнительных покупок.')],
+        ['Акционная цена — на вакуумный массаж всего тела.'],
+        [('Вакуум всего тела — 890', f'Вакуум — {price}')], f'Записаться за {price}')
+    body = f"""
+<main class="vacuum-page">
+<section class="hero vacuum-first" data-landing-version="vacuum-20261117"><div class="wrap">
+  <div class="hero-copy">
+    <p class="eyebrow">Velvet Laser · Сыктывкар · {S['address']}</p>
+    <h1>Вакуумный массаж тела<br><em>за {price}</em></h1>
+    <p class="lead">Аппаратный массаж всего тела без костюма. Начните с одного визита — покупать курс заранее не нужно.</p>
+  </div>
+  <div class="hero-media"><div class="arch">{img('room', 'Кабинет студии Velvet Laser', big=True, eager=True)}</div><p class="photo-caption">Кабинет нашей студии</p></div>
+  <div class="hero-act">
+    <div class="hero-cta"><a class="btn" href="#zapis">Записаться за {price}</a></div>
+    <p class="hero-note">Без костюма и доплат. Для первого посещения до {P['until']}.</p>
+    <a class="vacuum-message" href="{S['vk_write']}" target="_blank" rel="noopener">Есть вопрос? Напишите в ВК ↗</a>
+    <p class="warn-line">{L['warning']}</p>
+  </div>
+</div></section>
+<section class="vacuum-proof"><div class="wrap">
+  <a href="{S['yandex_reviews_url']}" target="_blank" rel="noopener"><b>{S['yandex_rating']} / 5 на Яндекс Картах</b><span>{S['yandex_reviews_count']} ↗</span></a>
+  <div><b>Костюм не нужен</b><span>Первый вакуумный массаж — {price}</span></div>
+  <div><b>В центре Сыктывкара</b><span>{S['address']} · ежедневно 9:00–21:00</span></div>
+</div></section>
+<section class="vacuum-visit"><div class="wrap">
+  <h2>Как пройдёт первый визит</h2>
+  <ol class="steps">
+    <li><div><b>Уточним детали</b><span>При записи обсудим процедуру, её продолжительность и удобное время.</span></div></li>
+    <li><div><b>Познакомимся с мастером</b><span>Перед массажем мастер уточнит самочувствие и пожелания. Интенсивность обсудим с вами.</span></div></li>
+    <li><div><b>Вы решите, хотите ли продолжить</b><span>Можно прийти на одну процедуру. Покупать абонемент не обязательно.</span></div></li>
+  </ol>
+</div></section>
+{booking}
+{studio_block([('team', 'Команда мастеров Velvet Laser', 'arch tall'), ('room', 'Кабинет студии', ''), ('tea', 'Чай в зоне отдыха', ''), ('outside', 'Вход в студию Velvet Laser', 'wide')])}
+{faq_contra('Противопоказания к вакуумному массажу уточните у специалиста до процедуры. ', [
+    ('Сколько стоит первый визит?', f'Вакуумный массаж всего тела — {price}. Костюм не нужен, дополнительных покупок для этой процедуры нет. Цена действует для первого посещения студии.'),
+    ('Сколько времени занимает процедура?', 'При записи администратор уточнит продолжительность выбранной процедуры и предложит удобное время.'),
+    ('Обязательно покупать абонемент?', 'Нет. Можно начать с одного визита и принять решение после знакомства со студией.'),
+    ('Как перенести запись?', 'Позвоните или напишите нам не позже чем за 24 часа.'),
+])}
+{contacts_block()}
+{cross_block(f"LPG с новым костюмом — {rub(o['price'] + o['suit_price'])}", 'Другая процедура: 40 минут аппаратного массажа через личный костюм. Посмотрите подробности, если выбираете LPG.', '/lpg/', 'l-lpg', 'LPG-массаж в студии')}
+</main>
+"""
+    return h + body + footer(f'Записаться за {price}')
+
+
 # ---------- Главная ----------
 def page_index():
     h = head("Velvet Laser — студия в центре Сыктывкара",
@@ -653,6 +721,7 @@ def main():
         "index.html": page_index(),
         f"{O['face']['slug']}/index.html": page_face(),
         f"{O['lpg']['slug']}/index.html": page_lpg(),
+        "vakuumnyy-massazh/index.html": page_vacuum(),
         "akciya/index.html": page_akciya(),
         "politika/index.html": page_politika(),
         "soglasie/index.html": page_soglasie(),
@@ -671,3 +740,4 @@ def main():
 
 if __name__ == "__main__":
     main()
+
